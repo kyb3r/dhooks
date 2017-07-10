@@ -27,6 +27,7 @@ embed.post()
 
 ```py
 embed = Webhook(url, color=int, msg=str) # NOTE: the `msg` kwarg is a normal message.
+
 embed.set_author(name=str, icon=url, url=url) # NOTE: the `url` kwarg is the url when you click on the author.
 embed.set_title(title=str, url=url) 
 embed.add_field(name=str, value=str, inline=bool) # NOTE: If you leave the `inline` kwarg out, it defaults to `True`
