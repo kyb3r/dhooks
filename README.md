@@ -11,7 +11,7 @@ requests
 
 ### Simple Example:
 ```py
-from Webhooks import Webhook
+from discord_hooks import Webhook
 
 url = 'WEBHOOK_URL'
 
@@ -41,7 +41,7 @@ embed.post() # Formats the object into a valid json object and then posts it to 
 ```
 ### Another Example:
 ```py
-from Webhooks import Webhook
+from discord_hooks import Webhook
 
 url = 'WEBHOOK_URL'
 
