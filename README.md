@@ -1,11 +1,46 @@
 # Discord-Webhooks
 #### *Discord Webhook Embeds for Python*
 
-### Example:
+### Requirements:
+```py
+>>> requests
+```
+
+### Simple Example:
 ```py
 from Webhooks import Webhook
 
-url = open('url').read()
+url = 'WEBHOOK_URL'
+
+msg = Webhook(url,msg="Hello there! I'm a webhook \U0001f62e")
+
+msg.post()
+```
+**Results in this:**
+
+<img src='https://i.imgur.com/3acyaiy.png'>
+
+### All Parameters:
+
+```py
+embed = Webhook(url, color=int, msg=str) # NOTE: the `msg` kwarg is a normal message.
+
+embed.set_author(name=str, icon=url, url=url) # NOTE: the `url` kwarg is the url when you click on the author.
+embed.set_title(title=str, url=url) 
+embed.add_field(name=str, value=str, inline=bool) # NOTE: If you leave `inline` out, it defaults to `True`
+embed.del_field(index)
+embed.set_thumbnail(url) 
+embed.set_image(url)
+embed.set_footer(text=str,icon=url,ts=bool or int) 
+# NOTE: ts = timestamp, you can either input `True` (current time) or an integer timestamp.
+
+embed.post() # NOTE: This command compiles / formats the object into json and then posts it to the webhook url
+```
+### Another Example:
+```py
+from Webhooks import Webhook
+
+url = 'WEBHOOK_URL'
 
 embed = Webhook(url, color=123123)
 
@@ -23,20 +58,3 @@ embed.post()
 
 <img src='https://i.imgur.com/8Ms4OID.png'>
 
-### All Parameters:
-
-```py
-embed = Webhook(url, color=int, msg=str) # NOTE: the `msg` kwarg is a normal message.
-
-embed.set_author(name=str, icon=url, url=url) # NOTE: the `url` kwarg is the url when you click on the author.
-embed.set_title(title=str, url=url) 
-embed.add_field(name=str, value=str, inline=bool) # NOTE: If you leave `inline` out, it defaults to `True`
-embed.del_field(index)
-embed.set_thumbnail(url) 
-embed.set_image(url)
-embed.set_footer(text=str,icon=url,ts=bool or int) 
-# NOTE: ts = timestamp, you can either input `True` (current time) or an integer timestamp.
-
-embed.post() # NOTE: This command compiles / formats the object into json and then posts it to the webhook url
-
-```
