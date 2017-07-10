@@ -33,6 +33,7 @@ embed.add_field(name=str, value=str, inline=bool) # NOTE: If you leave the `inli
 embed.del_field(index)
 embed.set_thumbnail(url) 
 embed.set_image(url)
-embed.set_footer(text=str,icon=url,ts=bool or int) # NOTE: ts = timestamp, you can either input `True` (current time) or an integer timestamp.
+embed.set_footer(text=str,icon=url,ts=bool or int) 
+# NOTE: ts = timestamp, you can either input `True` (current time) or an integer timestamp.
 
 ```
