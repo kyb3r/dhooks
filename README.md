@@ -6,7 +6,7 @@
 
 ### Requirements:
 ```py
->>> requests
+requests
 ```
 
 ### Simple Example:
