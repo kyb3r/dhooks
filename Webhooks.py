@@ -50,10 +50,11 @@ class Webhook:
 	def set_author(self, **kwargs):
 		self.author = kwargs['name'] if 'name' in kwargs else None
 		self.author_icon = kwargs['icon'] if 'icon' in kwargs else None
+		self.author_url = kwargs['url'] if 'url' in kwargs else None
 
 	def set_title(self, **kwargs):
 		self.title = kwargs['title'] if 'title' in kwargs else None
-		self.title_link = kwargs['url'] if 'url' in kwargs else None
+		self.title_url = kwargs['url'] if 'url' in kwargs else None
 
 	def set_thumbnail(self, url):
 		self.thumbnail = url
