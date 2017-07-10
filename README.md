@@ -36,4 +36,6 @@ embed.set_image(url)
 embed.set_footer(text=str,icon=url,ts=bool or int) 
 # NOTE: ts = timestamp, you can either input `True` (current time) or an integer timestamp.
 
+embed.post() # NOTE: This command compiles / formats the object into json and then posts it to the webhook url
+
 ```
