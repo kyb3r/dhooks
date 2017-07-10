@@ -1,4 +1,4 @@
-from Webhooks import Webhook
+from disocrdWebhooks import Webhook
 
 url = open('url').read()
 
