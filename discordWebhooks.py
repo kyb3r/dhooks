@@ -12,9 +12,8 @@ class Webhook:
 		"""
 
 		self.url = url 
-		self.msg = kwargs.get('msg', False)
-		self.color = kwargs.get('color', 123123)
-		self.json = None
+		self.msg = kwargs.get('msg')
+		self.color = kwargs.get('color')
 		self.title = None
 		self.title_url = None
 		self.author = None
@@ -77,20 +76,17 @@ class Webhook:
 	def del_field(self, index):
 		self.fields.pop(index)
 
-	def format(self,*arg):
+	@property
+	def json(self,*arg):
 		'''
 		Formats the data into a payload
 		'''
 
 		data = {}
-		if self.msg:
-			data["content"] = self.msg
-		else:
-			data['content'] = False
 
 		data["embeds"] = []
 		embed = defaultdict(dict)
-
+		if self.msg: data["content"] = self.msg
 		if self.author: embed["author"]["name"] = self.author
 		if self.author_icon: embed["author"]["icon_url"] = self.author_icon
 		if self.author_url: embed["author"]["url"] = self.author_url
@@ -113,16 +109,23 @@ class Webhook:
 				f["inline"] = field['inline'] 
 				embed["fields"].append(f)
 
-			data["embeds"].append(dict(embed))
+		data["embeds"].append(dict(embed))
 
-		self.json = json.dumps(data, indent=4)
+		empty = all(not d for d in data["embeds"])
+
+		if empty and 'content' not in data:
+			print('You cant post an empty payload.')
+		if empty: data['embeds'] = []
+
+		return json.dumps(data, indent=4)
+
+
 
 
 	def post(self):
 		"""
 		Send the JSON formated object to the specified `self.url`.
 		"""
-		self.format()
 
 		headers = {'Content-Type': 'application/json'}
 
