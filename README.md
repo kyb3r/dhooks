@@ -19,5 +19,6 @@ embed.set_footer(text='Here is my footer text',icon='https://i.imgur.com/rdm3W9t
 
 embed.post()
 ```
-**Results in this: **
+**Results in this:**
+
 <img src='https://i.imgur.com/8Ms4OID.png'>
