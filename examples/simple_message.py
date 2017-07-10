@@ -1,4 +1,4 @@
-from Webhooks import Webhook
+from discordWebhooks import Webhook
 
 
 url = open('url').read()
