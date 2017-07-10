@@ -4,7 +4,7 @@ url = open('url').read()
 
 embed = Webhook(url, color=1234123, msg='this `supports` __a__ **subset** *of* ~~markdown~~ \U0001f603')
 
-embed.set_author(name='Author Goes Here', icon='https://i.imgur.com/rdm3W9t.png')
+embed.set_author(name='Author Goes Here', icon='https://i.imgur.com/rdm3W9t.png', url='https://discordapp.com/')
 embed.set_title(title='title ~~(did you know you can have markdown here too?)~~', url='https://discordapp.com/')
 embed.set_desc("this description supports [named links](https://discordapp.com) as well. ```\nyes, even code blocks```")
 embed.add_field(name="Field 1 \U0001f603", value="some of these properties have certain limits...",inline=False)
