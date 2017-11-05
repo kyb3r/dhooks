@@ -3,7 +3,6 @@
 
 [<img src="https://discordapp.com/api/guilds/323349192837693440/widget.png?style=banner2">](https://discord.gg/JVw6nhD) 
 
-
 ### Requirements:
 ```py
 requests
@@ -15,13 +14,14 @@ from discord_hooks import Webhook
 
 url = 'WEBHOOK_URL'
 
-msg = Webhook(url,msg="Hello there! I'm a webhook \U0001f62e")
+msg = Webhook(url,msg="Hello there! I'm a webhook \U0001f62e", tts=True)
 
 msg.post()
 ```
 **Results in this:**
 
 <img src='https://i.imgur.com/3acyaiy.png'>
+> while also saying it aloud using TTS due to the tts field being True
 
 ### All Parameters:
 
@@ -47,6 +47,8 @@ url = 'WEBHOOK_URL'
 
 embed = Webhook(url, color=123123)
 
+embed.set_username('Username Here')
+embed.set_avatar_url('https://i.imgur.com/rdm3W9t.png')
 embed.set_author(name='Author Goes Here', icon='https://i.imgur.com/rdm3W9t.png')
 embed.set_desc('This is the **description** of the embed! \U0001f603 ')
 embed.add_field(name='Test Field',value='Value of the field \U0001f62e')
@@ -59,5 +61,5 @@ embed.post()
 ```
 **Results in this:**
 
-<img src='https://i.imgur.com/8Ms4OID.png'>
+<img src='https://i.imgur.com/LqVxPOS.png'>
 
