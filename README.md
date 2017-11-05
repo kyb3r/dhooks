@@ -1,8 +1,6 @@
 # Discord-Webhooks
 #### *Discord Webhook Embeds for Python*
 
-[<img src="https://discordapp.com/api/guilds/323349192837693440/widget.png?style=banner2">](https://discord.gg/JVw6nhD) 
-
 ### Requirements:
 ```py
 requests
@@ -28,6 +26,8 @@ msg.post()
 ```py
 embed = Webhook(url, color=int, msg=str) # NOTE: the `msg` kwarg is a normal message.
 
+embed.set_username(username)
+embed.set_avatar_url(url)
 embed.set_author(name=str, icon=url, url=url) # NOTE: the `url` kwarg is the url when you click on the author.
 embed.set_title(title=str, url=url) 
 embed.add_field(name=str, value=str, inline=bool) # NOTE: If you leave `inline` out, it defaults to `True`
