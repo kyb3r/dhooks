@@ -8,7 +8,10 @@
 ```py
 requests
 ```
-
+### Install:
+```
+pip install discord_hooks
+```
 ### Simple Example:
 ```py
 from discord_hooks import Webhook
