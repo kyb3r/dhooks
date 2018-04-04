@@ -67,7 +67,7 @@ class Webhook:
         self.footer = kwargs.get("text")
         self.footer_icon = kwargs.get("icon")
         ts = kwargs.get("ts")
-        if ts == True:
+        if ts:
             self.ts = str(datetime.datetime.utcfromtimestamp(time.time()))
         else:
             self.ts = str(datetime.datetime.utcfromtimestamp(ts))
