@@ -1,9 +1,6 @@
 # Discord-Webhooks
 #### *Discord Webhook Embeds for Python*
 
-[<img src="https://discordapp.com/api/guilds/323349192837693440/widget.png?style=banner2">](https://discord.gg/JVw6nhD) 
-
-
 ### Requirements:
 ```py
 requests
