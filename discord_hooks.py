@@ -14,6 +14,9 @@ class Webhook:
         """
 
         self.url = url
+        self.content = kwargs.get("content")
+        self.username = kwargs.get("username")
+        self.avatar = kwargs.get("avatar")
         self.msg = kwargs.get("msg")
         self.color = kwargs.get("color")
         self.title = kwargs.get("title")
@@ -62,6 +65,15 @@ class Webhook:
 
     def set_image(self, url):
         self.image = url
+
+    def set_username(self, username):
+        self.username = username
+
+    def set_avatar(self, avatar):
+        self.avatar = avatar
+
+    def set_content(self, content):
+        self.content = content
 
     def set_footer(self, **kwargs):
         self.footer = kwargs.get("text")
@@ -123,6 +135,13 @@ class Webhook:
         data["embeds"].append(dict(embed))
 
         empty = all(not d for d in data["embeds"])
+
+        if self.username:
+            data["username"] = self.username
+        if self.avatar:
+            data["avatar_url"] = self.avatar
+        if self.content:
+            data["content"] = self.content
 
         if empty and "content" not in data:
             print("You cant post an empty payload.")
