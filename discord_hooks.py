@@ -85,20 +85,32 @@ class Webhook:
 
         data["embeds"] = []
         embed = defaultdict(dict)
-        if self.msg: data["content"] = self.msg
-        if self.author: embed["author"]["name"] = self.author
-        if self.author_icon: embed["author"]["icon_url"] = self.author_icon
-        if self.author_url: embed["author"]["url"] = self.author_url
-        if self.color: embed["color"] = self.color
-        if self.desc: embed["description"] = self.desc
-        if self.title: embed["title"] = self.title
-        if self.title_url: embed["url"] = self.title_url
-        if self.image: embed["image"]["url"] = self.image
-        if self.thumbnail: embed["thumbnail"]["url"] = self.thumbnail
-        if self.footer: embed["footer"]["text"] = self.footer
-        if self.footer_icon: embed["footer"]["icon_url"] = self.footer_icon
-        if self.ts: embed["timestamp"] = self.ts
-
+        if self.msg:
+            data["content"] = self.msg
+        if self.author:
+            embed["author"]["name"] = self.author
+        if self.author_icon:
+            embed["author"]["icon_url"] = self.author_icon
+        if self.author_url:
+            embed["author"]["url"] = self.author_url
+        if self.color:
+            embed["color"] = self.color
+        if self.desc:
+            embed["description"] = self.desc
+        if self.title:
+            embed["title"] = self.title
+        if self.title_url:
+            embed["url"] = self.title_url
+        if self.image:
+            embed["image"]["url"] = self.image
+        if self.thumbnail:
+            embed["thumbnail"]["url"] = self.thumbnail
+        if self.footer:
+            embed["footer"]["text"] = self.footer
+        if self.footer_icon:
+            embed["footer"]["icon_url"] = self.footer_icon
+        if self.ts:
+            embed["timestamp"] = self.ts
         if self.fields:
             embed["fields"] = []
             for field in self.fields:
@@ -114,7 +126,9 @@ class Webhook:
 
         if empty and "content" not in data:
             print("You cant post an empty payload.")
-        if empty: data["embeds"] = []
+
+        if empty:
+            data["embeds"] = []
 
         return json.dumps(data, indent=4)
 
