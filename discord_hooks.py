@@ -93,7 +93,7 @@ class Webhook:
         Formats the data into a payload
         """
 
-        data = {}
+        data = dict()
 
         data["embeds"] = []
         embed = defaultdict(dict)
@@ -126,7 +126,7 @@ class Webhook:
         if self.fields:
             embed["fields"] = []
             for field in self.fields:
-                f = {}
+                f = dict()
                 f["name"] = field["name"]
                 f["value"] = field["value"]
                 f["inline"] = field["inline"]
