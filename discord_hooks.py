@@ -120,7 +120,7 @@ class Webhook:
 
     def post(self):
         """
-        Send the JSON formated object to the specified `self.url`.
+        Send the JSON formatted object to the specified `self.url`.
         """
 
         headers = {'Content-Type': 'application/json'}
@@ -130,6 +130,6 @@ class Webhook:
         if result.status_code == 400:
             print("Post Failed, Error 400")
         else:
-            print("Payload delivered successfuly")
+            print("Payload delivered successfully")
             print("Code : " + str(result.status_code))
             time.sleep(2)
