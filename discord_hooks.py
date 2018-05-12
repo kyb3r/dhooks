@@ -52,7 +52,7 @@ class Webhook:
         """
         Adds a timestamp to the embed.
         If now=True, then the current date and time will be used.
-        Otherwise you can supply a ISO 2601 timestamp with the time kwarg.
+        Otherwise you can supply a ISO 8601 timestamp with the time kwarg.
         """
         timestamp = kwargs.get("time")
         if timestamp == "":

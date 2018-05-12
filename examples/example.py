@@ -15,7 +15,7 @@ embed.add_field(name="Field 2 😱", value="try exceeding some of them!",inline=
 embed.add_field(name="Field 3 🙄", value="Jokes, dont do that.",inline=False)
 embed.add_field(name="Field 4 🙄", value="these last two")
 embed.add_field(name="Field 5 🙄", value="are inline fields")
-# Set the timestamp to either a ISO 2601 timestamp, or simply use `now=True`, which uses current time
+# Set the timestamp to either a ISO 8601 timestamp, or simply use `now=True`, which uses current time
 embed.set_timestamp(time='2018-04-30T05:34:26-07:00')
 embed.set_thumbnail('https://cdn.discordapp.com/embed/avatars/0.png')
 embed.set_image('https://cdn.discordapp.com/embed/avatars/0.png')
