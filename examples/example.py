@@ -3,8 +3,10 @@ WEBHOOK_URL = 'ADD YOUR WEBHOOK URL HERE'
 
 embed = Webhook(
     url=WEBHOOK_URL,
-    username='Hello World!',
-    color=123123)
+    username='Hello World!', # Username of the 'bot'
+    color=123123,   # Colour of the side of the embed
+    ts='2018-04-30T05:34:26-07:00') # Sets the timestamp to a ISO 8601 Timestamp, alternatively
+                                    # use tsIsNow=True to set the timestamp to the current time
 embed.set_author(name='Author Goes Here', icon='https://i.imgur.com/rdm3W9t.png', url='https://discordapp.com/')
 embed.set_title(title='title ~~(did you know you can have markdown here too?)~~', url='https://discordapp.com/')
 embed.set_desc("this description supports [named links](https://discordapp.com) as well. ```\nyes, even code blocks```")
