@@ -80,10 +80,10 @@ class Webhook:
         self.footer = kwargs.get("text")
         self.footer_icon = kwargs.get("icon")
         tsIsNow = kwargs.get("tsIsNow")
-        if ts:
+        if tsIsNow:
             self.tsIsNow = str(datetime.datetime.utcfromtimestamp(time.time()))
         else:
-            self.tsIsNow = str(datetime.datetime.utcfromtimestamp(tsIsNow))
+            self.tsIsNow = self.ts
 
     def del_field(self, index):
         self.fields.pop(index)
@@ -122,12 +122,8 @@ class Webhook:
             embed["footer"]["text"] = self.footer
         if self.footer_icon:
             embed["footer"]["icon_url"] = self.footer_icon
-
         if self.tsIsNow:
             embed["timestamp"] = self.tsIsNow
-        elif self.ts:
-            embed["timestamp"] = self.ts
-
         if self.fields:
             embed["fields"] = []
             for field in self.fields:
