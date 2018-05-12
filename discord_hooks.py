@@ -30,7 +30,6 @@ class Webhook:
         self.thumbnail = kwargs.get("thumbnail")
         self.footer = kwargs.get("footer")
         self.footer_icon = kwargs.get("footer_icon")
-        self.tsIsNow = kwargs.get("tsIsNow")
         self.ts = kwargs.get("ts")
 
     def add_field(self, **kwargs):
@@ -48,6 +47,20 @@ class Webhook:
         }
 
         self.fields.append(field)
+
+    def set_timestamp(self, now=False, **kwargs):
+        """
+        Adds a timestamp to the embed.
+        If now=True, then the current date and time will be used.
+        Otherwise you can supply a ISO 2601 timestamp with the time kwarg.
+        """
+        timestamp = kwargs.get("time")
+        if timestamp == "":
+            pass
+        else:
+            self.ts = timestamp
+        if now:
+            self.ts = str(datetime.datetime.utcfromtimestamp(time.time()))
 
     def set_desc(self, desc):
         self.desc = desc
@@ -79,11 +92,6 @@ class Webhook:
     def set_footer(self, **kwargs):
         self.footer = kwargs.get("text")
         self.footer_icon = kwargs.get("icon")
-        tsIsNow = kwargs.get("tsIsNow")
-        if tsIsNow:
-            self.tsIsNow = str(datetime.datetime.utcfromtimestamp(time.time()))
-        else:
-            self.tsIsNow = self.ts
 
     def del_field(self, index):
         self.fields.pop(index)
@@ -122,8 +130,8 @@ class Webhook:
             embed["footer"]["text"] = self.footer
         if self.footer_icon:
             embed["footer"]["icon_url"] = self.footer_icon
-        if self.tsIsNow:
-            embed["timestamp"] = self.tsIsNow
+        if self.ts:
+            embed["timestamp"] = self.ts
         if self.fields:
             embed["fields"] = []
             for field in self.fields:
