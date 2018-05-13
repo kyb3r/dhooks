@@ -29,6 +29,7 @@ embed.set_author(name=str, icon=url, url=url) # NOTE: the `url` kwarg is the url
 embed.set_title(title=str, url=url) 
 embed.add_field(name=str, value=str, inline=bool) # NOTE: If you leave `inline` out, it defaults to `True`
 embed.del_field(index)
+embed.set_timestamp(time='2018-04-30T05:34:26-07:00', now=True) # NOTE: Set the timestamp to either a ISO 8601 timestamp, or simply use `now=True`, which uses current time
 embed.set_thumbnail(url) 
 embed.set_image(url)
 embed.set_footer(text=str,icon=url,ts=True) # NOTE: You can input `True` (current time) or an int timestamp.
