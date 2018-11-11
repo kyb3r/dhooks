@@ -1,7 +1,6 @@
 import asyncio
 import traceback
 import datetime
-from email.utils import parsedate_to_datetime
 
 import aiohttp
 import requests
@@ -26,8 +25,13 @@ class Embed:
         self.title = kwargs.get('title')
         self.url = kwargs.get('url')
         self.description = kwargs.get('description')
-        self.timestamp = kwargs.get('timestamp')
         self.fields = kwargs.get('fields', [])
+
+        timestamp = kwargs.get('timestamp')
+        if timestamp is True: # sets the timestamp to the current time
+            self.timestamp = str(datetime.datetime.utcnow())
+        else:
+            self.timestamp = timestamp
           
     def del_field(self, index: int):
         '''Deletes a field by index'''
@@ -36,6 +40,12 @@ class Embed:
     def set_title(self, title: str, url:str):
         self.title = title
         self.url = url
+
+    def set_timestamp(self, time: str=None, now: bool=False):
+        if now:
+            self.timestamp = str(datetime.datetime.utcnow())
+        else:
+            self.timestamp = str(time)
       
     def add_field(self, name: str, value: str, inline: bool=True):
         '''Adds a field'''
