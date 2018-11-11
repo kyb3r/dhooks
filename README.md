@@ -1,7 +1,8 @@
-# Discord-Webhooks
-**_Discord Webhook Embeds for Python_**
+# Discord Webhooks
 
-This library enables you to easily format discord messages and embeds that you can easily send to a channel in discord using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
+**_Interact with discord webhooks using python._**
+
+This library enables you to easily format discord messages and send them to a channel using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
 
 ### Requirements:
 ```py
