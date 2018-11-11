@@ -1,5 +1,7 @@
 # Discord-Webhooks
-#### *Discord Webhook Embeds for Python*
+**_Discord Webhook Embeds for Python_**
+
+This library enables you to easily format discord messages and embeds that you can easily send to a channel in discord using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
 
 ### Requirements:
 ```py
@@ -45,4 +47,20 @@ hook.send(embeds=embed)
 **Results in this:**
 
 <img src='https://i.imgur.com/8Ms4OID.png'>
+
+# Asynchronous Usage
+
+To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows.
+
+```py
+import asyncio
+import dhooks
+
+async def main():
+    hook = dhooks.Webhook('WEBHOOK_URL', is_async=True)
+    await hook.send('hello') # sends a message to the webhook channel
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
+```
 
