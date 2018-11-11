@@ -19,6 +19,9 @@ pip install dhooks
 ```
 
 ### Simple Example:
+
+<img src='https://i.imgur.com/8wu283y.png' align='right' width='380'>
+
 ```py
 from dhooks import Webhook
 
@@ -26,9 +29,9 @@ hook = Webhook('WEBHOOK_URL')
 
 hook.send("Hello there! I'm a webhook :open_mouth:")
 ```
-**Results in this:**
 
-<img src='https://i.imgur.com/3acyaiy.png'>
+
+
 
 ### Discord Embed Support:
 ```py
