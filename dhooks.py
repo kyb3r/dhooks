@@ -40,7 +40,7 @@ class Embed:
         self.title = title
         self.url = url
 
-    def set_timestamp(self, time: str=None, now: bool=False):
+    def set_timestamp(self, time: str = None, now: bool = False):
         if now:
             self.timestamp = str(datetime.datetime.utcnow())
         else:
@@ -87,6 +87,7 @@ class Embed:
         }
 
 
+
 class Webhook:
     '''Asynchronous client that makes it easy to use webhooks'''
 
@@ -101,7 +102,7 @@ class Webhook:
     def close(self):
         self.session.close()
 
-    def send(self, content: str=None, embeds: list or Embed=[], tts: bool=False) -> bool:
+    def send(self, content: str = None, embeds: list or Embed = [], tts: bool = False) -> bool:
         '''Sends a message to the payload url'''
 
         payload = {
@@ -111,8 +112,8 @@ class Webhook:
             'tts': tts
         }
 
-        if not hasattr(embeds, '__iter__'):  # supports a list/tuple of embeds
-            embeds = [embeds]                # or a single embed
+        if not hasattr(embeds, '__iter__'):  # supports a list/tuple of embeds or a single embed
+            embeds = [embeds]
 
         payload['embeds'] = [em.to_dict() for em in embeds]
 

@@ -12,4 +12,6 @@ matrix:
 install:
   - pip install -r test/requirements.txt
   - pip install .
+
+before_script: flake8
 script: tox
