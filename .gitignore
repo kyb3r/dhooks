@@ -106,7 +106,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-test.py
-
+# custom
 .idea
 /.idea
+.vscode/

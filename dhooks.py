@@ -16,7 +16,7 @@ class Embed:
         'color', 'title', 'url', 'author',
         'description', 'fields', 'image',
         'thumbnail', 'footer', 'timestamp',
-        )
+    )
 
     def __init__(self, **kwargs):
         '''Initialises an Embed object'''
@@ -46,22 +46,22 @@ class Embed:
         else:
             self.timestamp = str(time)
 
-    def add_field(self, name: str, value: str, inline: bool = True):
+    def add_field(self, name: str, value: str, inline: bool=True):
         '''Adds a field'''
         field = {
             'name': name,
             'value': value,
             'inline': inline
-            }
+        }
         self.fields.append(field)
 
-    def set_author(self, name: str, icon_url: str = None, url: str = None):
+    def set_author(self, name: str, icon_url: str=None, url: str=None):
         '''Sets the author of the embed'''
         self.author = {
             'name': name,
             'icon_url': icon_url,
             'url': url
-            }
+        }
 
     def set_thumbnail(self, url: str):
         '''Sets the thumbnail of the embed'''
@@ -71,12 +71,12 @@ class Embed:
         '''Sets the image of the embed'''
         self.image = {'url': url}
 
-    def set_footer(self, text: str, icon_url: str = None):
+    def set_footer(self, text: str, icon_url: str=None):
         '''Sets the footer of the embed'''
         self.footer = {
             'text': text,
             'icon_url': icon_url
-            }
+        }
 
     def to_dict(self) -> dict:
         '''Turns the object into a dictionary'''
@@ -84,13 +84,13 @@ class Embed:
             key: getattr(self, key)
             for key in self.__slots__
             if hasattr(self, key) and getattr(self, key)
-            }
+        }
 
 
 class Webhook:
     '''Asynchronous client that makes it easy to use webhooks'''
 
-    def __init__(self, url: str, session=None, is_async: bool = False, **options):
+    def __init__(self, url: str, session=None, is_async: bool=False, **options):
         self.url = url
         self.is_async = is_async
         self.session = session or (aiohttp.ClientSession() if is_async else requests.Session())
@@ -109,7 +109,7 @@ class Webhook:
             'username': self.username,
             'avatar_url': self.avatar_url,
             'tts': tts
-            }
+        }
 
         if not hasattr(embeds, '__iter__'):  # supports a list/tuple of embeds or a single embed
             embeds = [embeds]
