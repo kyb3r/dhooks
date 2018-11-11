@@ -22,7 +22,7 @@ hook.send("Hello there! I'm a webhook :open_mouth:")
 
 <img src='https://i.imgur.com/3acyaiy.png'>
 
-### Another Example:
+### Discord Embed Support:
 ```py
 from dhooks import Webhook, Embed
 
@@ -49,7 +49,7 @@ hook.send(embeds=embed)
 
 <img src='https://i.imgur.com/8Ms4OID.png'>
 
-# Asynchronous Usage
+### Asynchronous Usage
 
 To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows.
 
