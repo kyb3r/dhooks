@@ -1,8 +1,16 @@
-# Discord Webhooks
 
-**_Interact with discord webhooks using python._**
+<h1 align="center">Discord Webhooks</h1>
 
-This **simple** library enables you to easily format discord messages and send them to a channel using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
+<div align="center">
+    <strong><i>Interact with discord webhooks using python.</i></strong>
+</div>
+
+<div align="center">
+    This <strong>simple</strong> library enables you to easily format discord messages and send them to a channel using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
+</div>
+
+
+
 
 ### Installation
 
