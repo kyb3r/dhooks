@@ -87,7 +87,6 @@ class Embed:
         }
 
 
-
 class Webhook:
     '''Asynchronous client that makes it easy to use webhooks'''
 
