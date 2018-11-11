@@ -4,7 +4,7 @@
 <div align="center">
     <strong><i>Interact with discord webhooks using python.</i></strong>
 </div>
-<hr>
+<br>
 <div align="center">
     This <strong>simple</strong> library enables you to easily format discord messages and send them to a channel using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
 </div>
