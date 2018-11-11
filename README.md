@@ -20,7 +20,7 @@ pip install dhooks
 
 ### Simple Example:
 
-<img src='https://i.imgur.com/8wu283y.png' align='right' width='380' height='115'>
+<img src='https://i.imgur.com/8wu283y.png' align='right' width='380' height='125'>
 
 ```py
 from dhooks import Webhook
