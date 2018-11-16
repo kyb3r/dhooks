@@ -21,7 +21,7 @@ class Webhook:
         self.avatar_url = options.get('avatar_url')
 
     def close(self):
-        self.session.close()
+        return self.session.close()
 
     def send(self, content: str = None, embeds: list or Embed = [], tts: bool = False) -> bool:
         '''Sends a message to the payload url'''
