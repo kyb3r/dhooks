@@ -13,9 +13,10 @@
 
 
 ### Installation
+To install the library simply use [pipenv](http://pipenv.org/) (or pip, of course).
 
 ```
-pip install dhooks
+pipenv install dhooks
 ```
 
 ### Simple Example:
