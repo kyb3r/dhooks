@@ -50,7 +50,7 @@ loop.run_until_complete(main())
 
 
 ### Discord Embed Support:
-You can easily format and send embeds using this library.
+You can easily format and send embeds using this library. [**Result**](https://i.imgur.com/8Ms4OID.png)
 ```py
 from dhooks import Webhook, Embed
 
@@ -73,7 +73,9 @@ embed.set_image('https://i.imgur.com/f1LOr4q.png')
 
 hook.send(embeds=embed)
 ```
-**Result:**
+### License
+This project is licensed under MIT
 
-<img src='https://i.imgur.com/8Ms4OID.png'>
+### Contributing
+Feel free to contribute to this project, a helping hand is always appreciated.
 
