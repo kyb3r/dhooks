@@ -1,4 +1,4 @@
-from .client import Webhook
+from .client import Webhook, File
 from .embed import Embed
 
 __title__ = 'dhooks'
