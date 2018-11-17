@@ -6,7 +6,7 @@
 </div>
 <br>
 <div align="center">
-    This <strong>simple</strong> library enables you to easily interact with discord webhooks, allowing you to easily format discord messages as well as retrieve webook information, modify and delete webhooks. Asynchronous usage is also supported.
+    This <strong>simple</strong> library enables you to easily interact with discord webhooks, allowing you to easily format discord messages, retrieve webhook information, modify and delete webhooks. Asynchronous usage is also supported.
 </div>
 
 
