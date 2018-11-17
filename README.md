@@ -49,7 +49,7 @@ loop.run_until_complete(main())
 
 
 
-### Discord Embed Support:
+### Discord Embeds:
 You can easily format and send embeds using this library. [**Result**](https://i.imgur.com/8Ms4OID.png)
 ```py
 from dhooks import Webhook, Embed
@@ -72,6 +72,29 @@ embed.set_thumbnail('https://i.imgur.com/rdm3W9t.png')
 embed.set_image('https://i.imgur.com/f1LOr4q.png')
 
 hook.send(embeds=embed)
+```
+### Modify Webhooks
+You can change the default name and avatar of a webhook easily.
+```py
+with open('img.png', rb) as f:
+    img = f.read() # bytes like object
+    
+hook.modify(name='Bob', avatar=img) 
+```
+
+### Get Webhook Info
+```py
+hook.get_info()
+# the following attributes are now populated with data from discord
+hook.guild_id
+hook.channel_id
+hook.default_name
+hook.default_avatar # or hook.default_avatar_url
+```
+
+# Delete Webhooks
+```py
+hook.delete()
 ```
 ### License
 This project is licensed under MIT
