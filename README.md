@@ -33,7 +33,7 @@ hook.send("Hello there! I'm a webhook :open_mouth:")
 
 ### Sending Files:
 You can easily send files as shown.
-```
+```py
 from dhooks import Webhook, File
 import requests
 import io
