@@ -1,5 +1,5 @@
 from base64 import b64encode
-from dataclasses import dataclass
+import re
 
 import aiohttp
 import requests
@@ -13,12 +13,23 @@ except ImportError:
 
 
 class File:
+    '''Data class that represents a file that can be sent to discord
+
+    Parameters
+    ----------
+    fp : str or BinaryIO
+        A filepath or a binary stream that is the file. If a filepath
+        is provided, this class will open and close the file for you.
+    name : str, optional
+        The name of the file that discord will use, if not provided,
+        defaults to the filepath or the binary stream's name
+    '''
 
     content_type = 'application/octet-stream'
 
     def __init__(self, fp, name=None):
         self.fp = fp
-        self.name = name or fp if isinstance(fp, str) else getattr(fp, 'name', 'file')
+        self.name = name or fp if isinstance(fp, str) else fp.name
 
     def open(self):
         if isinstance(self.fp, str): # its a filepath
@@ -30,17 +41,68 @@ class File:
             self.fp.close()
 
 class Webhook:
-    '''Asynchronous client that makes it easy to use webhooks'''
+    '''
+    Client that represents a discord webhook
 
+    Parameters
+    ----------
+    url: str, optional
+        The webhook url that the client will send requests to
+        Note: the url contains the id and token of the webhook in 
+        the form: `webhooks/{id}/{token}`. If you dont provide a url
+        you must provide the `id` and `token` keyword arguments.
+    session: requests or aiohttp session, optional
+        The http client session that will be used when making requests to the api.
+    is_async: bool, optional
+        Decides wether or not to the api methods in the class are asynchronous or not, 
+        defaults to False. If set to true, all api methods have the same interface, but returns 
+        a coroutine.
+    id: int, optional
+        The discord id of the webhook. 
+    token: str, optional
+        The token that belongs to the webhook.
+    username: str, optional
+        The username that will be set everytime you send a message,
+    avatar_url: str, optional
+        The avatar_url that will be set everytime you send a message
+
+    Attributes
+    ----------
+    username: str
+        The username that will override the default name of the webhook
+        everytime you send a message.
+    avatar_url: str
+        The avatar_url that will override the default avatar of the webhook
+        everytime you send a message.
+    default_name: str
+        Note: Set to None if `get_info()` hasn't been called.
+        The default name of the webhook, this can be changed via the modify
+        function or directly through discord server settings.
+    default_avatar: str
+        Note: Set to None if `get_info()` hasn't been called.
+        The default avatar string of the webhook. 
+    default_avatar_url: str
+        Note: Set to None if `get_info()` hasn't been called.
+        The url version of the default avatar the webhook has.
+    guild_id: id 
+        Note: Set to None if `get_info()` hasn't been called.
+        The id of the webhook's guild. (server)
+    channel_id: id
+        Note: Set to None if `get_info()` hasn't been called.
+        The id of the channel the webhook sends messages to..
+    '''
+
+    REGEX = r'discordapp.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})'
     ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
+    CDN = 'https://cdn.discordapp.com/avatars/{0.id}/{0.default_avatar}.{1}?size={2}'
 
-    def __init__(self, url=None, session=None, is_async=False, **options):
+    def __init__(self, url=None, is_async=False, session=None, **options):
         self.id = options.get('id')
         self.token = options.get('token')
         self.username = options.get('username')
         self.avatar_url = options.get('avatar_url')
-        self._url = url
         self.url = url or self.ENDPOINT.format(id=self.id, token=self.token)
+        self._set_id_and_token(url)
         self.is_async = is_async
         self.session = session or (aiohttp.ClientSession() if is_async else requests.Session())
         self.headers = {'Content-Type': 'multipart/form-data'}
@@ -52,8 +114,36 @@ class Webhook:
     def close(self):
         return self.session.close()
 
+    @property
+    def default_avatar_url(self):
+        if not self.default_avatar: # return default image
+            return 'https://cdn.discordapp.com/embed/avatars/0.png'
+        return self.CDN.format(self, 'png', 1024)
+
     def send(self, content=None, embeds=[], username=None, avatar_url=None, file=None, tts=False):
-        '''Sends a message to the payload url'''
+        '''
+        Sends a message to discord through the webhook.
+        
+        Parameters
+        ----------
+        content: str, optional
+            The message contents (up to 2000 characters)
+        embdes: Embed or list of Embed
+            Embedded rich content, you can either send a single embed
+            or a list of them.
+        file: File, optional
+            The file that will be uploaded
+        tts: bool, optional
+            Wether or not the message will use text-to-speech.
+            defaults to False
+        username: str, optional
+            Override the default username of the webhook, defaults 
+            to `self.username`
+        avatar_url: str, optional
+            Override the default avatar of the webhook. defaults to
+            `self.avatar_url`.
+
+        '''
 
         payload = {
             'content': content,
@@ -70,7 +160,17 @@ class Webhook:
         return self.request('POST', payload, file=file)
     
     def modify(self, name=None, avatar=None):
-        ''''''
+        '''
+        Edits the webhook.
+
+        Parameters
+        ----------
+        name: str, optional
+            The new default name of the webhook,
+            defaults to `self.username`
+        avatar: bytes like object, optional
+            The new default avatar that webhook will be set to.
+        '''
         payload = {
             'name': name or self.username
         }
@@ -86,7 +186,11 @@ class Webhook:
         return self.request(payload, method='PATCH')
 
     def get_info(self):
-        '''Updates self with webhook object data from the given token'''
+        '''
+        Updates self with data retrieved from discord.
+        The following attributes are refreshed with data:
+        `default_avatar`, `default_name`, `guild_id`, `channel_id`
+        '''
         return self.request(method='GET')
 
     def delete(self):
@@ -103,10 +207,11 @@ class Webhook:
         self.guild_id = data.get('guild_id')
         self.channel_id = data.get('channel_id')
 
-    def request(self, method='POST', payload=None, file=None):
-
-        if not self._url and (not self.id or not self.token):
-            raise ValueError('Missing data for webhook url.')
+    def request(self, method='POST', payload=None, file=None, multipart=None):
+        '''
+        Makes a request to the api. This function may or may 
+        not be a coroutine based on the `is_async` attribute
+        '''
 
         headers = None if file else self.headers
 
@@ -123,6 +228,9 @@ class Webhook:
         resp.raise_for_status()
         data = self._try_json(resp.text)
 
+        if file:
+            file.close()
+
         if isinstance(data, dict):
             self._update_fields(data)
             return self
@@ -130,6 +238,7 @@ class Webhook:
         return data
 
     async def async_request(self, method='POST', payload=None, file=None):
+        '''Async version of the request function using aiohttp'''
 
         headers = None if file else self.headers
 
@@ -144,10 +253,22 @@ class Webhook:
             resp.raise_for_status()
             text = await resp.text()
             data = self._try_json(text)
+            if file:
+                file.close()
             if isinstance(data, dict):
                 self._update_fields(data)
                 return self
             return data
+    
+    def _set_id_and_token(self, url):
+       if not url and (not self.id or not self.token):
+            raise ValueError('Missing data for webhook url.')
+        
+        if not self.id and not self.token: # extract them from provided url.
+            match = re.search(self.REGEX, self.url)
+            id, token = match.groups()
+            self.id = int(id)
+            self.token = token
 
     @staticmethod
     def _get_mime_type_for_image(data):
@@ -170,5 +291,5 @@ class Webhook:
     @staticmethod
     def _try_json(text):
         if not text:
-            return True # request successful but no response.
+            return None # request successful but no response.
         return json.loads(text)
