@@ -29,6 +29,8 @@ from dhooks import Webhook
 hook = Webhook('WEBHOOK_URL')
 
 hook.send("Hello there! I'm a webhook :open_mouth:")
+
+# hook.execute is also an alias
 ```
 
 ### Sending Files:
@@ -96,7 +98,7 @@ You can change the default name and avatar of a webhook easily.
 with open('img.png', rb) as f:
     img = f.read() # bytes like object
     
-hook.modify(name='Bob', avatar=img) 
+hook.modify(name='Bob', avatar=img) # hook.edit is also an alias
 
 hook.delete() # Webhook deleted permanently
 ```
@@ -111,7 +113,11 @@ from dhooks import Webhook
 
 async def main():
     hook = Webhook('WEBHOOK_URL', is_async=True)
-    await hook.send('hello') # sends a message to the webhook channel
+    
+    await hook.send('hello') 
+    await hook.modify('bob')
+    await hook.get_info()
+    await hook.delete()
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
