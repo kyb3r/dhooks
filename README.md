@@ -19,7 +19,7 @@ To install the library simply use [pipenv](http://pipenv.org/) (or pip, of cours
 pipenv install dhooks
 ```
 
-### Simple Example:
+### Sending Messages:
 
 <img src='https://i.imgur.com/8wu283y.png' align='right' width='380' height='125'>
 
@@ -31,9 +31,55 @@ hook = Webhook('WEBHOOK_URL')
 hook.send("Hello there! I'm a webhook :open_mouth:")
 ```
 
+### Discord Embeds:
+You can easily format and send embeds using this library. [**Result**](https://i.imgur.com/8Ms4OID.png)
+```py
+
+embed = Embed(
+    description='This is the **description** of the embed! :smiley:'
+    color=0x1e0f3,
+    timestamp=True # sets the timestamp to current time
+    )
+   
+image1 = 'https://i.imgur.com/rdm3W9t.png'
+image2 = 'https://i.imgur.com/f1LOr4q.png'
+
+embed.set_author(name='Author Goes Here', icon_url=image1)
+embed.add_field(name='Test Field',value='Value of the field \U0001f62e')
+embed.add_field(name='Another Field',value='1234 😄')
+embed.set_footer(text='Here is my footer text', icon_url=image1)
+
+embed.set_thumbnail(image1)
+embed.set_image(image2)
+
+hook.send(embeds=embed)
+```
+
+### Get Webhook Info
+You can get some basic information related to the webhook through discords api.
+
+```py
+hook.get_info()
+
+# the following attributes will be populated with data from discord.
+
+hook.guild_id, hook.channel_id, hook.default_name, hook.default_avatar_url 
+```
+
+### Modify and Delete Webhooks
+You can change the default name and avatar of a webhook easily.
+```py
+with open('img.png', rb) as f:
+    img = f.read() # bytes like object
+    
+hook.modify(name='Bob', avatar=img) 
+
+hook.delete() # Webhook deleted permanently
+```
+
 ### Asynchronous Usage:
 
-To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows.
+To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows. Simply use the `await` keyword when calling api methods.
 
 ```py
 import asyncio
@@ -47,55 +93,6 @@ loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 ```
 
-
-
-### Discord Embeds:
-You can easily format and send embeds using this library. [**Result**](https://i.imgur.com/8Ms4OID.png)
-```py
-from dhooks import Webhook, Embed
-
-
-hook = Webhook('WEBHOOK_URL')
-
-embed = Embed(
-    description='This is the **description** of the embed! :smiley:'
-    color=0x1e0f3,
-    timestamp=True # sets the timestamp to current time
-    )
-
-embed.set_author(name='Author Goes Here', icon_url='https://i.imgur.com/rdm3W9t.png')
-embed.add_field(name='Test Field',value='Value of the field \U0001f62e')
-embed.add_field(name='Another Field',value='1234 😄')
-embed.set_footer(text='Here is my footer text', icon_url='https://i.imgur.com/rdm3W9t.png')
-
-embed.set_thumbnail('https://i.imgur.com/rdm3W9t.png')
-embed.set_image('https://i.imgur.com/f1LOr4q.png')
-
-hook.send(embeds=embed)
-```
-### Modify Webhooks
-You can change the default name and avatar of a webhook easily.
-```py
-with open('img.png', rb) as f:
-    img = f.read() # bytes like object
-    
-hook.modify(name='Bob', avatar=img) 
-```
-
-### Get Webhook Info
-```py
-hook.get_info()
-# the following attributes are now populated with data from discord
-hook.guild_id
-hook.channel_id
-hook.default_name
-hook.default_avatar # or hook.default_avatar_url
-```
-
-# Delete Webhooks
-```py
-hook.delete()
-```
 ### License
 This project is licensed under MIT
 
