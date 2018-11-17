@@ -20,46 +20,46 @@ class Webhook:
 
     Parameters
     ----------
-    url: :class:`str`, optional
+    url: str, optional
         The webhook url that the client will send requests to
         Note: the url contains the id and token of the webhook in 
         the form: ``webhooks/{id}/{token}``. If you dont provide a url
         you must provide the `id` and `token` keyword arguments.
-    session: :class:`requests.Session` or :class:`aiohttp.ClientSession`, optional
+    session: requests.Session or aiohttp.ClientSession, optional
         The http session that will be used to make requests to the api.
-    is_async: :class:`bool`, optional
+    is_async: bool, optional
         Decides wether or not to the api methods in the class are 
         asynchronous or not, defaults to False. If set to true, 
         all api methods have the same interface, but returns a coroutine.
-    \*\*id: :class:`int`, optional
+    \*\*id: int, optional
         The discord id of the webhook. If not provided, it will 
         be extracted from the webhook url.
-    \*\*token: :class:`str`, optional
+    \*\*token: str, optional
         The token that belongs to the webhook. If not provided,
         it will be extracted from the webhook url.
-    \*\*username: :class:`str`, optional
+    \*\*username: str, optional
         The username that will override the default name of the 
         webhook everytime you send a message.
-    \*\*avatar_url: :class:`str`, optional
+    \*\*avatar_url: str, optional
         The avatar_url that will override the default avatar 
         of the webhook everytime you send a message.
 
     Attributes
     ----------
-    default_name: :class:`str`
+    default_name: str
         Note: Set to None if :meth:`get_info()` hasn't been called.
         The default name of the webhook, this can be changed via the modify
         function or directly through discord server settings.
-    default_avatar: :class:`str`
+    default_avatar: str
         Note: Set to None if :meth:`get_info()` hasn't been called.
         The default avatar string of the webhook. 
-    default_avatar_url: :class:`str`
+    default_avatar_url: str
         Note: Set to None if :meth:`get_info()` hasn't been called.
         The url version of the default avatar the webhook has.
-    guild_id: :class:`int` 
+    guild_id: int 
         Note: Set to None if :meth:`get_info()` hasn't been called.
         The id of the webhook's guild. (server)
-    channel_id: :class:`int`
+    channel_id: int
         Note: Set to None if :meth:`get_info()` hasn't been called.
         The id of the channel the webhook sends messages to..
     '''
@@ -99,20 +99,20 @@ class Webhook:
         
         Parameters
         ----------
-        content: :class:`str`, optional
+        content: str, optional
             The message contents (up to 2000 characters)
         embeds: :class:`Embed` or List[:class:`Embed`]
             Embedded rich content, you can either send a single embed
             or a list of them.
         file: :class:`File`, optional
             The file that will be uploaded
-        tts: :class:`bool`, optional
+        tts: bool, optional
             Wether or not the message will use text-to-speech.
             defaults to False
-        username: :class:`str`, optional
+        username: str, optional
             Override the default username of the webhook, defaults 
             to :attr:`username`
-        avatar_url: :class:`str`, optional
+        avatar_url: str, optional
             Override the default avatar of the webhook. defaults to
             :attr:`self.avatar_url`.
 
@@ -139,10 +139,10 @@ class Webhook:
 
         Parameters
         ----------
-        name: :class:`str`, optional
+        name: str, optional
             The new default name of the webhook,
             defaults to :attr:`username`
-        avatar: :class:`bytes`, optional
+        avatar: bytes, optional
             The new default avatar that webhook will be set to.
         '''
         payload = {

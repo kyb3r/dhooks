@@ -3,10 +3,10 @@ class File:
 
     Parameters
     ----------
-    fp : :class:`str` or :class:`BinaryIO`
+    fp : str or BinaryIO
         A filepath or a binary stream that is the file. If a filepath
         is provided, this class will open and close the file for you.
-    name : :class:`str`, optional
+    name : str, optional
         The name of the file that discord will use, if not provided,
         defaults to the filepath or the binary stream's name
     '''
