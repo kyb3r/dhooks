@@ -54,6 +54,7 @@ hook.send('Another one', file=file)
 
 ### Discord Embeds:
 You can easily format and send embeds using this library. [**Result**](https://i.imgur.com/8Ms4OID.png)
+Note: embed objects from `discord.py` are also compatible with this library.
 ```py
 from dhooks import Webhook, Embed
 
