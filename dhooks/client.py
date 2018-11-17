@@ -1,48 +1,22 @@
-from base64 import b64encode
 import re
 
 import aiohttp
 import requests
 
 from .embed import Embed
+from .file import File
+from .utils import try_json, bytes_to_base64_data
+from .utils import aliased, alias
 
 try:
     import ujson as json
 except ImportError:
     import json
 
-
-class File:
-    '''Data class that represents a file that can be sent to discord
-
-    Parameters
-    ----------
-    fp : str or BinaryIO
-        A filepath or a binary stream that is the file. If a filepath
-        is provided, this class will open and close the file for you.
-    name : str, optional
-        The name of the file that discord will use, if not provided,
-        defaults to the filepath or the binary stream's name
-    '''
-
-    content_type = 'application/octet-stream'
-
-    def __init__(self, fp, name=None):
-        self.fp = fp
-        self.name = name or fp if isinstance(fp, str) else fp.name
-
-    def open(self):
-        if isinstance(self.fp, str): # its a filepath
-             self.fp = open(self.fp, 'rb')
-        return self.fp
-    
-    def close(self):
-        if not isinstance(self.fp, str):
-            self.fp.close()
-
+@aliased
 class Webhook:
     '''
-    Client that represents a discord webhook
+    Class that represents a discord webhook
 
     Parameters
     ----------
@@ -52,28 +26,26 @@ class Webhook:
         the form: `webhooks/{id}/{token}`. If you dont provide a url
         you must provide the `id` and `token` keyword arguments.
     session: requests or aiohttp session, optional
-        The http client session that will be used when making requests to the api.
+        The http session that will be used to make requests to the api.
     is_async: bool, optional
-        Decides wether or not to the api methods in the class are asynchronous or not, 
-        defaults to False. If set to true, all api methods have the same interface, but returns 
-        a coroutine.
+        Decides wether or not to the api methods in the class are 
+        asynchronous or not, defaults to False. If set to true, 
+        all api methods have the same interface, but returns a coroutine.
     id: int, optional
-        The discord id of the webhook. 
+        The discord id of the webhook. If not provided, it will 
+        be extracted from the webhook url.
     token: str, optional
-        The token that belongs to the webhook.
-    username: str, optional
-        The username that will be set everytime you send a message,
-    avatar_url: str, optional
-        The avatar_url that will be set everytime you send a message
+        The token that belongs to the webhook. If not provided,
+        it will be extracted from the webhook url.
 
     Attributes
     ----------
     username: str
-        The username that will override the default name of the webhook
-        everytime you send a message.
+        The username that will override the default name of the 
+        webhook everytime you send a message.
     avatar_url: str
-        The avatar_url that will override the default avatar of the webhook
-        everytime you send a message.
+        The avatar_url that will override the default avatar 
+        of the webhook everytime you send a message.
     default_name: str
         Note: Set to None if `get_info()` hasn't been called.
         The default name of the webhook, this can be changed via the modify
@@ -105,7 +77,7 @@ class Webhook:
         self._set_id_and_token(url)
         self.is_async = is_async
         self.session = session or (aiohttp.ClientSession() if is_async else requests.Session())
-        self.headers = {'Content-Type': 'multipart/form-data'}
+        self.headers = {'Content-Type': 'application/json'}
         self.default_avatar = None
         self.default_name = None
         self.guild_id = None
@@ -120,6 +92,7 @@ class Webhook:
             return 'https://cdn.discordapp.com/embed/avatars/0.png'
         return self.CDN.format(self, 'png', 1024)
 
+    @alias('execute')
     def send(self, content=None, embeds=[], username=None, avatar_url=None, file=None, tts=False):
         '''
         Sends a message to discord through the webhook.
@@ -158,7 +131,8 @@ class Webhook:
         payload['embeds'] = [em.to_dict() for em in embeds]
         
         return self.request('POST', payload, file=file)
-    
+
+    @alias('edit')    
     def modify(self, name=None, avatar=None):
         '''
         Edits the webhook.
@@ -176,14 +150,14 @@ class Webhook:
         }
 
         if avatar:
-            payload['avatar'] = self._bytes_to_base64_data(avatar)
+            payload['avatar'] = self.bytes_to_base64_data(avatar)
 
         payload = {k: v for k, v in payload.items() if v}
 
         if not payload:
             raise ValueError('No attributes to be modified specified.')
         
-        return self.request(payload, method='PATCH')
+        return self.request(method='PATCH', payload=payload)
 
     def get_info(self):
         '''
@@ -197,20 +171,10 @@ class Webhook:
         '''Deletes the webhook permanently'''
         return self.request(method='DELETE')
 
-    def _update_fields(self, data):
-        if 'content' in data:
-            return # a message object was returned
-        self.id = data.get('id')
-        self.token = data.get('token')
-        self.default_avatar = data.get('avatar')
-        self.default_name = data.get('name')
-        self.guild_id = data.get('guild_id')
-        self.channel_id = data.get('channel_id')
-
     def request(self, method='POST', payload=None, file=None, multipart=None):
         '''
         Makes a request to the api. This function may or may 
-        not be a coroutine based on the `is_async` attribute
+        not be a coroutine based on the `is_async` attribute.
         '''
 
         headers = None if file else self.headers
@@ -226,7 +190,7 @@ class Webhook:
 
         resp = self.session.request(method, self.url, data=payload, headers=headers, files=multipart)
         resp.raise_for_status()
-        data = self._try_json(resp.text)
+        data = try_json(resp.text)
 
         if file:
             file.close()
@@ -252,7 +216,7 @@ class Webhook:
         async with self.session.request(method, self.url, data=data, headers=headers) as resp:
             resp.raise_for_status()
             text = await resp.text()
-            data = self._try_json(text)
+            data = try_json(text)
             if file:
                 file.close()
             if isinstance(data, dict):
@@ -260,36 +224,25 @@ class Webhook:
                 return self
             return data
     
+    def _update_fields(self, data):
+        if 'content' in data:
+            return # a message object was returned
+        self.id = data.get('id')
+        self.token = data.get('token')
+        self.default_avatar = data.get('avatar')
+        self.default_name = data.get('name')
+        self.guild_id = data.get('guild_id')
+        self.channel_id = data.get('channel_id')
+    
     def _set_id_and_token(self, url):
-       if not url and (not self.id or not self.token):
+        if not url and (not self.id or not self.token):
             raise ValueError('Missing data for webhook url.')
-        
-        if not self.id and not self.token: # extract them from provided url.
-            match = re.search(self.REGEX, self.url)
-            id, token = match.groups()
-            self.id = int(id)
-            self.token = token
-
-    @staticmethod
-    def _get_mime_type_for_image(data):
-        if data.startswith(b'\x89\x50\x4E\x47\x0D\x0A\x1A\x0A'):
-            return 'image/png'
-        elif data.startswith(b'\xFF\xD8') and data.rstrip(b'\0').endswith(b'\xFF\xD9'):
-            return 'image/jpeg'
-        elif data.startswith(b'\x47\x49\x46\x38\x37\x61') or data.startswith(b'\x47\x49\x46\x38\x39\x61'):
-            return 'image/gif'
-        else:
-            raise ValueError('Unsupported image type given')
-
-    @staticmethod
-    def _bytes_to_base64_data(data):
-        fmt = 'data:{mime};base64,{data}'
-        mime = Webhook._get_mime_type_for_image(data)
-        b64 = b64encode(data).decode('ascii')
-        return fmt.format(mime=mime, data=b64)
-
-    @staticmethod
-    def _try_json(text):
-        if not text:
-            return None # request successful but no response.
-        return json.loads(text)
+        if self.id and self.token:
+            return
+        # extract them from provided url.
+        match = re.search(self.REGEX, self.url)
+        if not match:
+            raise ValueError('Invalid webhook url provided.')
+        id, token = match.groups()
+        self.id = int(id)
+        self.token = token
