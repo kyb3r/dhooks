@@ -122,7 +122,7 @@ async def main():
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
 ```
-### Documentation
+### [Documentation](https://dhooks.readthedocs.io)
 You can find the full API reference here (https://dhooks.readthedocs.io)
 
 ### License
