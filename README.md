@@ -6,7 +6,7 @@
 </div>
 <br>
 <div align="center">
-    This <strong>simple</strong> library enables you to easily format discord messages and send them to a channel using a webhook url. Synchronous requests as well as asynchronous requests are supported within the library through an easy to use API.
+    This <strong>simple</strong> library enables you to easily interact with discord webhooks through discord's api. Normal as well as asynchronous requests are supported within the library through an easy to use API.
 </div>
 
 
@@ -29,8 +29,6 @@ from dhooks import Webhook
 hook = Webhook('WEBHOOK_URL')
 
 hook.send("Hello there! I'm a webhook :open_mouth:")
-
-# hook.execute is also an alias
 ```
 
 ### Sending Files:
@@ -44,7 +42,7 @@ hook = Webhook('WEBHOOK_URL')
 
 file = File('path/to/file.png', name='cat.png') # optional name for discord
 
-hook.send('Look at this', file=file)
+hook.execute('Look at this', file=file) # hook.execute is an alias for hook.send
 
 # you can also pass in a File like object
 
