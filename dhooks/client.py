@@ -150,7 +150,7 @@ class Webhook:
         }
 
         if avatar:
-            payload['avatar'] = self.bytes_to_base64_data(avatar)
+            payload['avatar'] = bytes_to_base64_data(avatar)
 
         payload = {k: v for k, v in payload.items() if v}
 
