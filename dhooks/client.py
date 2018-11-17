@@ -20,47 +20,47 @@ class Webhook:
 
     Parameters
     ----------
-    url: str, optional
+    url: :class:`str`, optional
         The webhook url that the client will send requests to
         Note: the url contains the id and token of the webhook in 
-        the form: `webhooks/{id}/{token}`. If you dont provide a url
+        the form: ``webhooks/{id}/{token}``. If you dont provide a url
         you must provide the `id` and `token` keyword arguments.
-    session: requests or aiohttp session, optional
+    session: :class:`requests.Session` or :class:`aiohttp.ClientSession`, optional
         The http session that will be used to make requests to the api.
-    is_async: bool, optional
+    is_async: :class:`bool`, optional
         Decides wether or not to the api methods in the class are 
         asynchronous or not, defaults to False. If set to true, 
         all api methods have the same interface, but returns a coroutine.
-    id: int, optional
+    \*\*id: :class:`int`, optional
         The discord id of the webhook. If not provided, it will 
         be extracted from the webhook url.
-    token: str, optional
+    \*\*token: :class:`str`, optional
         The token that belongs to the webhook. If not provided,
         it will be extracted from the webhook url.
+    \*\*username: :class:`str`, optional
+        The username that will override the default name of the 
+        webhook everytime you send a message.
+    \*\*avatar_url: :class:`str`, optional
+        The avatar_url that will override the default avatar 
+        of the webhook everytime you send a message.
 
     Attributes
     ----------
-    username: str
-        The username that will override the default name of the 
-        webhook everytime you send a message.
-    avatar_url: str
-        The avatar_url that will override the default avatar 
-        of the webhook everytime you send a message.
-    default_name: str
-        Note: Set to None if `get_info()` hasn't been called.
+    default_name: :class:`str`
+        Note: Set to None if :meth:`get_info()` hasn't been called.
         The default name of the webhook, this can be changed via the modify
         function or directly through discord server settings.
-    default_avatar: str
-        Note: Set to None if `get_info()` hasn't been called.
+    default_avatar: :class:`str`
+        Note: Set to None if :meth:`get_info()` hasn't been called.
         The default avatar string of the webhook. 
-    default_avatar_url: str
-        Note: Set to None if `get_info()` hasn't been called.
+    default_avatar_url: :class:`str`
+        Note: Set to None if :meth:`get_info()` hasn't been called.
         The url version of the default avatar the webhook has.
-    guild_id: id 
-        Note: Set to None if `get_info()` hasn't been called.
+    guild_id: :class:`int` 
+        Note: Set to None if :meth:`get_info()` hasn't been called.
         The id of the webhook's guild. (server)
-    channel_id: id
-        Note: Set to None if `get_info()` hasn't been called.
+    channel_id: :class:`int`
+        Note: Set to None if :meth:`get_info()` hasn't been called.
         The id of the channel the webhook sends messages to..
     '''
 
@@ -99,22 +99,22 @@ class Webhook:
         
         Parameters
         ----------
-        content: str, optional
+        content: :class:`str`, optional
             The message contents (up to 2000 characters)
-        embdes: Embed or list of Embed
+        embeds: :class:`Embed` or List[:class:`Embed`]
             Embedded rich content, you can either send a single embed
             or a list of them.
-        file: File, optional
+        file: :class:`File`, optional
             The file that will be uploaded
-        tts: bool, optional
+        tts: :class:`bool`, optional
             Wether or not the message will use text-to-speech.
             defaults to False
-        username: str, optional
+        username: :class:`str`, optional
             Override the default username of the webhook, defaults 
-            to `self.username`
-        avatar_url: str, optional
+            to :attr:`username`
+        avatar_url: :class:`str`, optional
             Override the default avatar of the webhook. defaults to
-            `self.avatar_url`.
+            :attr:`self.avatar_url`.
 
         '''
 
@@ -130,7 +130,7 @@ class Webhook:
 
         payload['embeds'] = [em.to_dict() for em in embeds]
         
-        return self.request('POST', payload, file=file)
+        return self._request('POST', payload, file=file)
 
     @alias('edit')    
     def modify(self, name=None, avatar=None):
@@ -139,10 +139,10 @@ class Webhook:
 
         Parameters
         ----------
-        name: str, optional
+        name: :class:`str`, optional
             The new default name of the webhook,
-            defaults to `self.username`
-        avatar: bytes like object, optional
+            defaults to :attr:`username`
+        avatar: :class:`bytes`, optional
             The new default avatar that webhook will be set to.
         '''
         payload = {
@@ -157,21 +157,21 @@ class Webhook:
         if not payload:
             raise ValueError('No attributes to be modified specified.')
         
-        return self.request(method='PATCH', payload=payload)
+        return self._request(method='PATCH', payload=payload)
 
     def get_info(self):
         '''
         Updates self with data retrieved from discord.
         The following attributes are refreshed with data:
-        `default_avatar`, `default_name`, `guild_id`, `channel_id`
+        :attr:`default_avatar`, :attr:`default_name`, :attr:`guild_id`, :attr:`channel_id`
         '''
-        return self.request(method='GET')
+        return self._request(method='GET')
 
     def delete(self):
         '''Deletes the webhook permanently'''
-        return self.request(method='DELETE')
+        return self._request(method='DELETE')
 
-    def request(self, method='POST', payload=None, file=None, multipart=None):
+    def _request(self, method='POST', payload=None, file=None, multipart=None):
         '''
         Makes a request to the api. This function may or may 
         not be a coroutine based on the `is_async` attribute.
@@ -182,7 +182,7 @@ class Webhook:
         payload = json.dumps(payload)
             
         if self.is_async:
-            return self.async_request(method, payload, file)
+            return self._async_request(method, payload, file)
 
         if file:
             payload = {'payload_json': payload}
@@ -201,7 +201,7 @@ class Webhook:
 
         return data
 
-    async def async_request(self, method='POST', payload=None, file=None):
+    async def _async_request(self, method='POST', payload=None, file=None):
         '''Async version of the request function using aiohttp'''
 
         headers = None if file else self.headers

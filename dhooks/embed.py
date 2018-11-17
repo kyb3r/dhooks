@@ -2,7 +2,24 @@ import datetime
 
 
 class Embed:
-    '''Class that represents a discord embed'''
+    '''Class that represents a discord embed
+
+    The following attributes can be passed in during creation.
+
+    Attributes
+    -----------
+    title: :class:`str`
+        The title of the embed.
+    description: :class:`str`
+        The description of the embed.
+    url: :class:`str`
+        The URL of the embed.
+    timestamp: :class:`str` or :class:`bool`
+        The ``USO 8601`` timestamp of the embed content. If set to true, 
+        the current time is set as the timestamp.
+    color: :class:`int`
+        The color of the embed.
+    '''
 
     __slots__ = (
         'color', 'title', 'url', 'author',
@@ -29,10 +46,20 @@ class Embed:
         self.fields.pop(index)
 
     def set_title(self, title: str, url: str):
+        '''Sets the title of the embed'''
         self.title = title
         self.url = url
 
     def set_timestamp(self, time: str = None, now: bool = False):
+        '''Sets the timestamp of the embed.
+        
+        Parameters
+        ----------
+        time: :class:`str`
+            The ``USO 8601`` timestamp 
+        now: :class:`bool`
+            If set to true the current time is used for the timestamp.
+        '''
         if now:
             self.timestamp = str(datetime.datetime.utcnow())
         else:

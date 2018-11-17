@@ -1,20 +1,29 @@
-.. dhooks documentation master file, created by
-   sphinx-quickstart on Sat Nov 17 13:07:58 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to dhooks's documentation!
-==================================
+=======================================
+
+This **simple** library enables you to easily interact with discord webhooks, 
+allowing you to easily format discord messages and discord embeds, retrieve webhook 
+information, modify and delete webhooks. Asynchronous usage is also supported.
+
+Features
+~~~~~~~~
+
+- Use the same client for sync/async operations.
+- Implements the entire webhook API.
+- Easy to use with an object oriented design.
+
+
+Contents
+~~~~~~~~
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+
+   api
 
 
-
-Indices and tables
-==================
+Indices
+~~~~~~~
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

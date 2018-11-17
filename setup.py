@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup(
     name='dhooks',
     packages=find_packages(),
-    version='1.0.1',
+    version='1.0.2',
     description='An (a)sync wrapper for discord webhooks',
     # long_description=long_description,
     # long_description_content_type='text/x-rst',
