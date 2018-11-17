@@ -1,4 +1,6 @@
 from base64 import b64encode
+import types
+import functools
 
 try:
     import ujson as json
@@ -6,18 +8,30 @@ except ImportError:
     import json
 
 
+def copy_func(f):
+    g = types.FunctionType(f.__code__, f.__globals__, name=f.__name__,
+                           argdefs=f.__defaults__,
+                           closure=f.__closure__)
+    g = functools.update_wrapper(g, f)
+    g.__kwdefaults__ = f.__kwdefaults__
+    return g
+
 def alias(*aliases):
     def decorator(func):
-        func._aliases = set(aliases)
+        new_func = copy_func(func)
+        new_func.__doc__ = 'Alias for :meth:`{0.__name__}`'.format(func)
+        func._aliases = {a: new_func for a in aliases}
         return func
     return decorator
 
 def aliased(cls):
     original_methods = cls.__dict__.copy()
-    for name, method in original_methods.items():
+    for method in original_methods.values():
         if hasattr(method, '_aliases'):
-            for alias in method._aliases - set(original_methods):
-                setattr(cls, alias, method)
+            for alias, func in method._aliases.items():
+                if alias in original_methods.keys():
+                    continue
+                setattr(cls, alias, func)
     return cls
 
 def mime_type(data):
