@@ -22,7 +22,7 @@ async def init(app, loop):
 
     em = Embed(color=0x2ecc71)
     em.set_author('[INFO] Starting Worker')
-    em.set_footer(f'Host: {socket.gethostname()}')
+    em.set_footer('Host: {}'.format(socket.gethostname()))
 
     await app.webhook.send(embeds=em)
 
