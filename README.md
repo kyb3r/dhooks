@@ -132,7 +132,7 @@ hook.delete() # Webhook deleted permanently
 
 ### Asynchronous Usage:
 
-To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows. Simply use the `await` keyword when calling api methods.
+To asynchronously make requests using aiohttp, simply use `Webhook.Async` to create the object. An example is as follows. Simply use the `await` keyword when calling api methods.
 
 ```py
 from dhooks import Webhook
@@ -148,7 +148,7 @@ async def main():
     await hook.close() # close the client session
 ```
 
-Alternatively use an async with block.
+Alternatively you can use an async with block to automatically close the session once finished.
 ```py
 async def main():
     async with Webhook.Async('url') as hook:
