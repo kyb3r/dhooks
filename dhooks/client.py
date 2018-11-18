@@ -60,6 +60,12 @@ class Webhook:
     channel_id: int
         Note: Set to None if :meth:`get_info()` hasn't been called.
         The id of the channel the webhook sends messages to..
+    username: str
+        The username that will override the default name of the
+        webhook everytime you send a message.
+    avatar_url: str
+        The avatar_url that will override the default avatar
+        of the webhook everytime you send a message.
     """
 
     REGEX = r'discordapp.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})'
@@ -111,7 +117,7 @@ class Webhook:
             to :attr:`username`
         avatar_url: str, optional
             Override the default avatar of the webhook. defaults to
-            :attr:`self.avatar_url`.
+            :attr:`avatar_url`.
 
         """
 
