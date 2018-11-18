@@ -3,14 +3,31 @@
 
 <div align="center">
     <strong><i>Interact with discord webhooks using python.</i></strong>
+    
+    <a href="https://travis-ci.com/kyb3r/dhooks">
+      <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge" alt="Travis" />
+    </a>
+    
+    <a href="https://github.com/kyb3r/dhooks/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/kyb3r/dhooks.svg?style=for-the-badge" alt="Travis" />
+    </a>
+    
+    <a href="https://pypi.org/project/dhooks/">
+      <img src="https://img.shields.io/pypi/v/dhooks.svg?style=for-the-badge" alt="Travis" />
+    </a>
+    
+    <a href="https://pypi.org/project/dhooks/">
+      <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=for-the-badge" alt="Travis" />
+    </a>
+    
+    <a href="https://pypi.org/project/dhooks/">
+      <img src="https://img.shields.io/pypi/dm/dhooks.svg?style=for-the-badge" alt="Travis" />
+    </a>
+
 </div>
 <br>
 <div align="center">
     This <strong>simple</strong> library enables you to easily interact with discord webhooks, allowing you to easily format discord messages and discord embeds, retrieve webhook information, modify and delete webhooks. Asynchronous usage is also supported.
-
-<hr>
-
-![test](https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge)
 
 </div>
 
