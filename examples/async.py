@@ -31,7 +31,7 @@ async def init(app, loop):
 async def server_stop(app, loop):
     """Sends a message to the webhook channel when server stops"""
     em = Embed(color=0xe67e22)
-    em.set_footer(f'Host: {socket.gethostname()}')
+    em.set_footer('Host: {}'.format(socket.gethostname()))
     em.set_author('[INFO] Server Stopped')
 
     await app.webhook.send(embeds=em)
