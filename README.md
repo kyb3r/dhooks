@@ -51,7 +51,7 @@ pipenv install dhooks
 ```py
 from dhooks import Webhook
 
-hook = Webhook('WEBHOOK_URL')
+hook = Webhook('url')
 
 hook.send("Hello there! I'm a webhook :open_mouth:")
 ```
@@ -63,15 +63,17 @@ from dhooks import Webhook, File
 import requests
 import io
 
-hook = Webhook('WEBHOOK_URL')
+hook = Webhook('url')
 
 file = File('path/to/file.png', name='cat.png') # optional name for discord
 
-hook.execute('Look at this', file=file) # hook.execute is an alias for hook.send
+hook.send('Look at this', file=file)
 
-# you can also pass in a File like object
+```
 
-response = await requests.get('https://i.imgur.com/rdm3W9t.png')
+You can also pass in a file like object
+```py
+response = requests.get('https://i.imgur.com/rdm3W9t.png')
 file = File(io.BytesIO(response.content), name='wow.png')
 
 hook.send('Another one', file=file)
@@ -84,7 +86,7 @@ Note: embed objects from `discord.py` are also compatible with this library.
 ```py
 from dhooks import Webhook, Embed
 
-hook = Webhook('WEBHOOK_URL')
+hook = Webhook('url')
 
 embed = Embed(
     description='This is the **description** of the embed! :smiley:'
@@ -121,32 +123,38 @@ hook.guild_id, hook.channel_id, hook.default_name, hook.default_avatar_url
 You can change the default name and avatar of a webhook easily.
 ```py
 with open('img.png', rb) as f:
-    img = f.read() # bytes like object
+    img = f.read() # bytes
     
-hook.modify(name='Bob', avatar=img) # hook.edit is also an alias
+hook.modify(name='Bob', avatar=img)
 
 hook.delete() # Webhook deleted permanently
 ```
 
 ### Asynchronous Usage:
 
-To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows. Simply use the `await` keyword when calling api methods.
+To asynchronously make requests using aiohttp, simply use `Webhook.Async` to create the object. An example is as follows. Simply use the `await` keyword when calling api methods.
 
 ```py
-import asyncio
 from dhooks import Webhook
 
 async def main():
-    hook = Webhook('WEBHOOK_URL', is_async=True)
+    hook = Webhook.Async('url')
     
     await hook.send('hello') 
     await hook.modify('bob')
     await hook.get_info()
     await hook.delete()
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+    await hook.close() # close the client session
 ```
+
+Alternatively you can use an async with block to automatically close the session once finished.
+```py
+async def main():
+    async with Webhook.Async('url') as hook:
+        await hook.send('hello') 
+```
+
 ### [Documentation](https://dhooks.readthedocs.io)
 You can find the full API reference here (https://dhooks.readthedocs.io)
 
