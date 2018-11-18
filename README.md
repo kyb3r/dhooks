@@ -69,8 +69,10 @@ file = File('path/to/file.png', name='cat.png') # optional name for discord
 
 hook.send('Look at this', file=file)
 
-# you can also pass in a File like object
+```
 
+You can also pass in a file like object
+```py
 response = requests.get('https://i.imgur.com/rdm3W9t.png')
 file = File(io.BytesIO(response.content), name='wow.png')
 
@@ -121,9 +123,9 @@ hook.guild_id, hook.channel_id, hook.default_name, hook.default_avatar_url
 You can change the default name and avatar of a webhook easily.
 ```py
 with open('img.png', rb) as f:
-    img = f.read() # bytes like object
+    img = f.read() # bytes
     
-hook.modify(name='Bob', avatar=img) # hook.edit is also an alias
+hook.modify(name='Bob', avatar=img)
 
 hook.delete() # Webhook deleted permanently
 ```
@@ -133,7 +135,6 @@ hook.delete() # Webhook deleted permanently
 To asynchronously make requests using aiohttp, simply pass in `is_async=True` as a parameter when creating a Webhook object. An example is as follows. Simply use the `await` keyword when calling api methods.
 
 ```py
-import asyncio
 from dhooks import Webhook
 
 async def main():
@@ -145,17 +146,15 @@ async def main():
     await hook.delete()
 
     await hook.close() # close the client session
+```
 
-    # Alternatively use an async with block
-
+Alternatively use an async with block.
+```py
+async def main():
     async with Webhook.Async('url') as hook:
         await hook.send('hello') 
-        await hook.modify('ted')
-        await hook.get_info()
-        await hook.delete()
-
-asyncio.run(main())
 ```
+
 ### [Documentation](https://dhooks.readthedocs.io)
 You can find the full API reference here (https://dhooks.readthedocs.io)
 
