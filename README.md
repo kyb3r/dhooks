@@ -10,8 +10,8 @@
   <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge" alt="Travis" />
 </a>
 
-<a href="https://github.com/kyb3r/dhooks/blob/master/LICENSE">
-  <img src="https://img.shields.io/github/license/kyb3r/dhooks.svg?style=for-the-badge" alt="Travis" />
+<a href="https://pypi.org/project/dhooks/">
+  <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=for-the-badge" alt="Travis" />
 </a>
 
 <a href="https://pypi.org/project/dhooks/">
@@ -19,11 +19,11 @@
 </a>
 
 <a href="https://pypi.org/project/dhooks/">
-  <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=for-the-badge" alt="Travis" />
+  <img src="https://img.shields.io/pypi/dm/dhooks.svg?style=for-the-badge" alt="Travis" />
 </a>
 
-<a href="https://pypi.org/project/dhooks/">
-  <img src="https://img.shields.io/pypi/dm/dhooks.svg?style=for-the-badge" alt="Travis" />
+<a href="https://github.com/kyb3r/dhooks/blob/master/LICENSE">
+  <img src="https://img.shields.io/github/license/kyb3r/dhooks.svg?style=for-the-badge" alt="Travis" />
 </a>
 
 </div>
