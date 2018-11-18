@@ -11,6 +11,7 @@ VALID_URL = os.getenv('webhook_url')
 INVALID_URL = os.getenv('webhook_url') + '55'
 MALFORMED_URL = 'https://discordapp.com/api/webhooks/bob'
 
+
 class TestBlockingClient(unittest.TestCase):
     def setUp(self):
         session = requests.Session()
@@ -20,6 +21,7 @@ class TestBlockingClient(unittest.TestCase):
     def test_send_content(self):
         send = self.valid_client.send('TEST')
         self.assertIs(send, None)
+
 
 if __name__ == '__main__':
     unittest.main()

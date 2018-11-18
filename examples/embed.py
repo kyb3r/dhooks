@@ -14,34 +14,34 @@ em1.description = "this description supports [named links](https://discordapp.co
 em1.timestamp = "2018-04-30T05:34:26-07:00"
 
 em1.set_author(
-    name='Author Goes Here', 
-    icon_url='https://i.imgur.com/rdm3W9t.png', 
+    name='Author Goes Here',
+    icon_url='https://i.imgur.com/rdm3W9t.png',
     url='https://discordapp.com/'
-    )
+)
 
 em1.set_title(
-    title='title ~~(did you know you can have markdown here too?)~~', 
+    title='title ~~(did you know you can have markdown here too?)~~',
     url='https://discordapp.com/'
-    )
+)
 
 em1.add_field(
-    name="Field 1 :smiley:", 
-    value="some of these properties have certain limits...", 
+    name="Field 1 :smiley:",
+    value="some of these properties have certain limits...",
     inline=False
-    )
+)
 
 em1.add_field(
-    name="Field 2 😱", 
-    value="try exceeding some of them!", 
+    name="Field 2 😱",
+    value="try exceeding some of them!",
     inline=False
-    )
+)
 
 em1.add_field(
-    name="Field 3 🙄", 
-    value="Jokes, dont do that.", 
+    name="Field 3 🙄",
+    value="Jokes, dont do that.",
     inline=False
-    )
-    
+)
+
 em1.add_field("Field 4 🙄", "these last two")
 em1.add_field("Field 5 🙄", "are inline fields")
 
@@ -52,9 +52,9 @@ em1.set_thumbnail('https://cdn.discordapp.com/embed/avatars/0.png')
 em1.set_image('https://cdn.discordapp.com/embed/avatars/0.png')
 
 em1.set_footer(
-    text='Time Stamp is here =>', 
+    text='Time Stamp is here =>',
     icon_url='https://cdn.discordapp.com/embed/avatars/0.png'
-    )
+)
 
 em2 = Embed(description='hey')
 
