@@ -16,6 +16,7 @@ def copy_func(f):
     g.__kwdefaults__ = f.__kwdefaults__
     return g
 
+
 def alias(*aliases):
     def decorator(func):
         new_func = copy_func(func)
@@ -23,6 +24,7 @@ def alias(*aliases):
         func._aliases = {a: new_func for a in aliases}
         return func
     return decorator
+
 
 def aliased(cls):
     original_methods = cls.__dict__.copy()
@@ -34,6 +36,7 @@ def aliased(cls):
                 setattr(cls, alias, func)
     return cls
 
+
 def mime_type(data):
     if data.startswith(b'\x89\x50\x4E\x47\x0D\x0A\x1A\x0A'):
         return 'image/png'
@@ -44,13 +47,15 @@ def mime_type(data):
     else:
         raise ValueError('Unsupported image type given')
 
+
 def bytes_to_base64_data(data):
     fmt = 'data:{mime};base64,{data}'
     mime = mime_type(data)
     b64 = b64encode(data).decode('ascii')
     return fmt.format(mime=mime, data=b64)
 
+
 def try_json(text):
     if not text:
-        return None # request successful but no response.
+        return None  # request successful but no response.
     return json.loads(text)

@@ -1,5 +1,5 @@
 class File:
-    '''Data class that represents a file that can be sent to discord
+    """Data class that represents a file that can be sent to discord
 
     Parameters
     ----------
@@ -9,7 +9,7 @@ class File:
     name : str, optional
         The name of the file that discord will use, if not provided,
         defaults to the filepath or the binary stream's name
-    '''
+    """
 
     content_type = 'application/octet-stream'
 
@@ -18,10 +18,10 @@ class File:
         self.name = name or (fp if isinstance(fp, str) else getattr(fp, 'name', 'file'))
 
     def open(self):
-        if isinstance(self.fp, str): # its a filepath
-             self.fp = open(self.fp, 'rb')
+        if isinstance(self.fp, str):  # its a filepath
+            self.fp = open(self.fp, 'rb')
         return self.fp
-    
+
     def close(self):
         if not isinstance(self.fp, str):
             self.fp.close()

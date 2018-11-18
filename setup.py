@@ -19,7 +19,7 @@ setup(
         'Issue Tracker': 'https://github.com/4rqm/dhooks/issues'
     },
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
