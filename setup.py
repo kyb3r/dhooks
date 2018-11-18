@@ -15,7 +15,7 @@ setup(
     install_requires=['aiohttp', 'requests'],
     python_requires='>=3.5',
     project_urls={
-        'Source Code': 'https://github.com/4rqm/dhooks/tree/rewrite',
+        'Source Code': 'https://github.com/4rqm/dhooks/',
         'Issue Tracker': 'https://github.com/4rqm/dhooks/issues'
     },
     classifiers=[
