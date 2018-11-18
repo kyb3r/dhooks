@@ -86,21 +86,21 @@ class Webhook:
         self.default_name = None
         self.guild_id = None
         self.channel_id = None
-    
+
     @classmethod
     def Async(cls, url=None, session=None, **options):
         '''Returns the webhook in async mode.'''
         return cls(url, is_async=True, session=session, **options)
-    
+
     def __enter__(self):
         return self
 
     def __exit__(self, type, value, traceback):
         self.close()
-    
+
     async def __aenter__(self):
         return self
-    
+
     async def __aexit__(self, type, value, traceback):
         await self.close()
 
