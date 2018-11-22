@@ -7,23 +7,23 @@
     <br>
     
 <a href="https://travis-ci.com/kyb3r/dhooks">
-  <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=flat" alt="Travis" />
+  <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge&colorB=7289DA" alt="Travis" />
 </a>
 
 <a href="https://pypi.org/project/dhooks/">
-  <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=flat" alt="Travis" />
+  <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="Travis" />
 </a>
 
 <a href="https://pypi.org/project/dhooks/">
-  <img src="https://img.shields.io/pypi/v/dhooks.svg?style=flat" alt="Travis" />
+  <img src="https://img.shields.io/pypi/v/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="Travis" />
 </a>
 
 <a href="https://pypi.org/project/dhooks/">
-  <img src="https://img.shields.io/pypi/dm/dhooks.svg?style=flat" alt="Travis" />
+  <img src="https://img.shields.io/pypi/dm/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="Travis" />
 </a>
 
 <a href="https://github.com/kyb3r/dhooks/blob/master/LICENSE">
-  <img src="https://img.shields.io/github/license/kyb3r/dhooks.svg?style=flat" alt="Travis" />
+  <img src="https://img.shields.io/github/license/kyb3r/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="Travis" />
 </a>
 
 </div>
@@ -162,5 +162,4 @@ You can find the full API reference here (https://dhooks.readthedocs.io)
 This project is licensed under MIT
 
 ### Contributing
-Feel free to contribute to this project, a helping hand is always appreciated.
-
+Feel free to contribute to this project, a helping hand is always appreciated. Join our discord server: https://discord.gg/etJNHCQ
