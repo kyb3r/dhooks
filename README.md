@@ -162,4 +162,4 @@ You can find the full API reference here (https://dhooks.readthedocs.io)
 This project is licensed under MIT
 
 ### Contributing
-Feel free to contribute to this project, a helping hand is always appreciated. Join our discord server: https://discord.gg/etJNHCQ
+Feel free to contribute to this project, a helping hand is always appreciated. Join our discord server [here](https://discord.gg/etJNHCQ). 
