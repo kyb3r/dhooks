@@ -56,29 +56,6 @@ hook = Webhook('url')
 hook.send("Hello there! I'm a webhook :open_mouth:")
 ```
 
-### Sending Files:
-You can easily send files as shown.
-```py
-from dhooks import Webhook, File
-import requests
-import io
-
-hook = Webhook('url')
-
-file = File('path/to/file.png', name='cat.png') # optional name for discord
-
-hook.send('Look at this', file=file)
-
-```
-
-You can also pass in a file like object
-```py
-response = requests.get('https://i.imgur.com/rdm3W9t.png')
-file = File(io.BytesIO(response.content), name='wow.png')
-
-hook.send('Another one', file=file)
-```
-
 ### Discord Embeds:
 You can easily format and send embeds using this library. [**Result**](https://i.imgur.com/8Ms4OID.png)
 
@@ -106,6 +83,29 @@ embed.set_thumbnail(image1)
 embed.set_image(image2)
 
 hook.send(embeds=embed)
+```
+
+### Sending Files:
+You can easily send files as shown.
+```py
+from dhooks import Webhook, File
+import requests
+import io
+
+hook = Webhook('url')
+
+file = File('path/to/file.png', name='cat.png') # optional name for discord
+
+hook.send('Look at this', file=file)
+
+```
+
+You can also pass in a file like object
+```py
+response = requests.get('https://i.imgur.com/rdm3W9t.png')
+file = File(io.BytesIO(response.content), name='wow.png')
+
+hook.send('Another one', file=file)
 ```
 
 ### Get Webhook Info
