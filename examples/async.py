@@ -13,7 +13,7 @@ app = Sanic(__name__)
 @app.listener('before_server_start')
 async def init(app, loop):
     """Sends a message to the webhook channel when server stops"""
-    app.session = aiohttp.ClientSession(loop=loop)  # we use this to make web requests
+    app.session = aiohttp.ClientSession(loop=loop)  # to make web requests
     app.webhook = Webhook(
         os.getenv('webhook_url'),
         session=app.session,

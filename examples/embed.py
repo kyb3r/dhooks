@@ -5,12 +5,14 @@ webhook_url = os.getenv('webhook_url')
 
 client = Webhook(webhook_url)
 
-# NOTE: Following code has a solid rundown of all methods within the embed class
+# NOTE: Following code has a solid rundown of all methods
+#       within the embed class.
 
 em1 = Embed()
 
 em1.color = 0x00FF00  # colors should be a hexadecimal value
-em1.description = "this description supports [named links](https://discordapp.com) as well. ```\nyes, even code blocks```"
+em1.description = "this description supports \
+[named links](https://discordapp.com) as well. ```\nyes, even code blocks```"
 em1.timestamp = "2018-04-30T05:34:26-07:00"
 
 em1.set_author(
@@ -46,7 +48,8 @@ em1.add_field("Field 4 🙄", "these last two")
 em1.add_field("Field 5 🙄", "are inline fields")
 
 em1.add_field('hello', 'bob')
-em1.del_field(-1)  # deletes the last field, supply an index, equivilant to em1.fields.pop(-1)
+# deletes the last field, supply an index, equivilant to em1.fields.pop(-1)
+em1.del_field(-1)
 
 em1.set_thumbnail('https://cdn.discordapp.com/embed/avatars/0.png')
 em1.set_image('https://cdn.discordapp.com/embed/avatars/0.png')
@@ -58,4 +61,5 @@ em1.set_footer(
 
 em2 = Embed(description='hey')
 
-client.send('hello there.', embeds=[em1, em2])  # you can send multiple embeds or a single embed.
+# you can send multiple embeds or a single embed.
+client.send('hello there.', embeds=[em1, em2])
