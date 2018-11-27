@@ -15,7 +15,8 @@ class File:
 
     def __init__(self, fp, name=None):
         self.fp = fp
-        self.name = name or (fp if isinstance(fp, str) else getattr(fp, 'name', 'file'))
+        self.name = name or (fp if isinstance(fp, str) else
+                             getattr(fp, 'name', 'file'))
 
     def open(self):
         if isinstance(self.fp, str):  # its a filepath

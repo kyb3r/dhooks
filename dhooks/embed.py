@@ -65,7 +65,7 @@ class Embed:
         else:
             self.timestamp = str(time)
 
-    def add_field(self, name: str, value: str, inline: bool=True):
+    def add_field(self, name: str, value: str, inline: bool = True):
         """Adds a field"""
         field = {
             'name': name,
@@ -74,7 +74,7 @@ class Embed:
         }
         self.fields.append(field)
 
-    def set_author(self, name: str, icon_url: str=None, url: str=None):
+    def set_author(self, name: str, icon_url: str = None, url: str = None):
         """Sets the author of the embed"""
         self.author = {
             'name': name,
@@ -90,7 +90,7 @@ class Embed:
         """Sets the image of the embed"""
         self.image = {'url': url}
 
-    def set_footer(self, text: str, icon_url: str=None):
+    def set_footer(self, text: str, icon_url: str = None):
         """Sets the footer of the embed"""
         self.footer = {
             'text': text,
