@@ -77,8 +77,8 @@ image1 = 'https://i.imgur.com/rdm3W9t.png'
 image2 = 'https://i.imgur.com/f1LOr4q.png'
 
 embed.set_author(name='Author Goes Here', icon_url=image1)
-embed.add_field(name='Test Field', value='Value of the field \U0001f62e')
-embed.add_field(name='Another Field', value='1234 😄')
+embed.add_field(name='Test Field', value='Value of the field :open_mouth:')
+embed.add_field(name='Another Field', value='1234 :smile:')
 embed.set_footer(text='Here is my footer text', icon_url=image1)
 
 embed.set_thumbnail(image1)
