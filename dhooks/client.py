@@ -29,16 +29,16 @@ class Webhook:
         Decides wether or not to the api methods in the class are
         asynchronous or not, defaults to False. If set to true,
         all api methods have the same interface, but returns a coroutine.
-    \*\*id: int, optional
+    &ast;&ast;id: int, optional
         The discord id of the webhook. If not provided, it will
         be extracted from the webhook url.
-    \*\*token: str, optional
+    &ast;&ast;token: str, optional
         The token that belongs to the webhook. If not provided,
         it will be extracted from the webhook url.
-    \*\*username: str, optional
+    &ast;&ast;username: str, optional
         The username that will override the default name of the
         webhook everytime you send a message.
-    \*\*avatar_url: str, optional
+    &ast;&ast;avatar_url: str, optional
         The avatar_url that will override the default avatar
         of the webhook everytime you send a message.
 
@@ -68,9 +68,11 @@ class Webhook:
         of the webhook everytime you send a message.
     """
 
-    REGEX = r'discordapp.com/api/webhooks/(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})'
+    REGEX = r'discordapp.com/api/webhooks/' \
+            r'(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})'
     ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
-    CDN = 'https://cdn.discordapp.com/avatars/{0.id}/{0.default_avatar}.{1}?size={2}'
+    CDN = r'https://cdn.discordapp.com/avatars/' \
+          r'{0.id}/{0.default_avatar}.{1}?size={2}'
 
     def __init__(self, url=None, is_async=False, session=None, **options):
         self.id = options.get('id')
@@ -80,7 +82,8 @@ class Webhook:
         self.url = url or self.ENDPOINT.format(id=self.id, token=self.token)
         self._set_id_and_token(url)
         self.is_async = is_async
-        self.session = session or (aiohttp.ClientSession() if is_async else requests.Session())
+        self.session = session or (aiohttp.ClientSession()
+                                   if is_async else requests.Session())
         self.headers = {'Content-Type': 'application/json'}
         self.default_avatar = None
         self.default_name = None
@@ -114,7 +117,8 @@ class Webhook:
         return self.CDN.format(self, 'png', 1024)
 
     @alias('execute')
-    def send(self, content=None, embeds=[], username=None, avatar_url=None, file=None, tts=False):
+    def send(self, content=None, embeds=[], username=None,
+             avatar_url=None, file=None, tts=False):
         """Sends a message to discord through the webhook.
 
         Parameters
@@ -145,7 +149,8 @@ class Webhook:
             'tts': tts
         }
 
-        if not hasattr(embeds, '__iter__'):  # supports a list/tuple of embeds or a single embed
+        # supports a list/tuple of embeds or a single embed
+        if not hasattr(embeds, '__iter__'):
             embeds = [embeds]
 
         payload['embeds'] = [em.to_dict() for em in embeds]
@@ -182,7 +187,10 @@ class Webhook:
         """
         Updates self with data retrieved from discord.
         The following attributes are refreshed with data:
-        :attr:`default_avatar`, :attr:`default_name`, :attr:`guild_id`, :attr:`channel_id`
+        :attr:`default_avatar`,
+        :attr:`default_name`,
+        :attr:`guild_id`,
+        :attr:`channel_id`
         """
         return self._request(method='GET')
 
@@ -207,7 +215,8 @@ class Webhook:
             payload = {'payload_json': payload}
             multipart = {'file': (file.name, file.open(), file.content_type)}
 
-        resp = self.session.request(method, self.url, data=payload, headers=headers, files=multipart)
+        resp = self.session.request(method, self.url, data=payload,
+                                    headers=headers, files=multipart)
         resp.raise_for_status()
         data = try_json(resp.text)
 
@@ -229,10 +238,12 @@ class Webhook:
 
         if file:
             data = aiohttp.FormData()
-            data.add_field('file', file.open(), filename=file.name, content_type=file.content_type)
+            data.add_field('file', file.open(), filename=file.name,
+                           content_type=file.content_type)
             data.add_field('payload_json', payload)
 
-        async with self.session.request(method, self.url, data=data, headers=headers) as resp:
+        async with self.session.request(method, self.url, data=data,
+                                        headers=headers) as resp:
             resp.raise_for_status()
             text = await resp.text()
             data = try_json(text)
