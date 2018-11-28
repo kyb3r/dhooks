@@ -6,8 +6,10 @@ def read(fname):
     with open(os.path.join(os.path.dirname(__file__), fname)) as f:
         return f.read()
 
+
 setup(
     name='dhooks',
+    author='kyb3r',
     packages=find_packages(),
     version='1.0.9',
     description='An (a)sync wrapper for discord webhooks',
