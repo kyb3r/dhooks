@@ -1,13 +1,14 @@
+from dotenv import load_dotenv, find_dotenv
 import unittest
 import requests
 import os
 
 import dhooks
-from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-REAL_URL = os.getenv('WEBHOOK_URL')
+
+REAL_URL = os.getenv('TEST_WEBHOOK_URL')
 FAKE_URL = 'https://discordapp.com/api/webhooks/12345678901234567890/' \
            'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk'
 
@@ -28,7 +29,3 @@ class TestBlockingClient(unittest.TestCase):
             self.fail("Valid client failed to send.")
 
     # TODO: Add test for invalid urls
-
-
-if __name__ == '__main__':
-    unittest.main()
