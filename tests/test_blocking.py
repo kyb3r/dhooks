@@ -8,8 +8,8 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 REAL_URL = os.getenv('WEBHOOK_URL')
-FAKE_URL = 'https://discordapp.com/api/webhooks/12345678901234567890/abcdefghi' \
-              'jklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk'
+FAKE_URL = 'https://discordapp.com/api/webhooks/12345678901234567890/' \
+           'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk'
 
 MALFORMED_URL = 'https://discordapp.com/api/webhooks/bob'
 
