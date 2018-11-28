@@ -14,19 +14,19 @@ except ImportError:
 
 @aliased
 class Webhook:
-    """Class that represents a discord webhook
+    """Class that represents a discord webhook.
 
     Parameters
     ----------
     url: str, optional
         The webhook url that the client will send requests to
         Note: the url contains the id and token of the webhook in
-        the form: ``webhooks/{id}/{token}``. If you dont provide a url
+        the form: ``webhooks/{id}/{token}``. If you don't provide a url
         you must provide the `id` and `token` keyword arguments.
     session: requests.Session or aiohttp.ClientSession, optional
         The http session that will be used to make requests to the api.
     is_async: bool, optional
-        Decides wether or not to the api methods in the class are
+        Decides whether or not to the api methods in the class are
         asynchronous or not, defaults to False. If set to true,
         all api methods have the same interface, but returns a coroutine.
     &ast;&ast;id: int, optional
@@ -37,10 +37,10 @@ class Webhook:
         it will be extracted from the webhook url.
     &ast;&ast;username: str, optional
         The username that will override the default name of the
-        webhook everytime you send a message.
+        webhook every time you send a message.
     &ast;&ast;avatar_url: str, optional
         The avatar_url that will override the default avatar
-        of the webhook everytime you send a message.
+        of the webhook every time you send a message.
 
     Attributes
     ----------
@@ -56,20 +56,21 @@ class Webhook:
         The url version of the default avatar the webhook has.
     guild_id: int
         Note: Set to None if :meth:`get_info()` hasn't been called.
-        The id of the webhook's guild. (server)
+        The id of the webhook's guild.
     channel_id: int
         Note: Set to None if :meth:`get_info()` hasn't been called.
-        The id of the channel the webhook sends messages to..
+        The id of the channel the webhook sends messages to.
     username: str
         The username that will override the default name of the
-        webhook everytime you send a message.
+        webhook every time you send a message.
     avatar_url: str
         The avatar_url that will override the default avatar
-        of the webhook everytime you send a message.
+        of the webhook every time you send a message.
     """
 
     REGEX = r'discordapp.com/api/webhooks/' \
             r'(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})'
+    # TODO: if the token exceeds 68, the url's still deemed valid
     ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
     CDN = r'https://cdn.discordapp.com/avatars/' \
           r'{0.id}/{0.default_avatar}.{1}?size={2}'
@@ -92,19 +93,19 @@ class Webhook:
 
     @classmethod
     def Async(cls, url=None, session=None, **options):
-        '''Returns the webhook in async mode.'''
+        """Returns the webhook in async mode."""
         return cls(url, is_async=True, session=session, **options)
 
     def __enter__(self):
         return self
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, *args):
         self.close()
 
     async def __aenter__(self):
         return self
 
-    async def __aexit__(self, type, value, traceback):
+    async def __aexit__(self, *args):
         await self.close()
 
     def close(self):
@@ -117,7 +118,7 @@ class Webhook:
         return self.CDN.format(self, 'png', 1024)
 
     @alias('execute')
-    def send(self, content=None, embeds=[], username=None,
+    def send(self, content=None, embeds=None, username=None,
              avatar_url=None, file=None, tts=False):
         """Sends a message to discord through the webhook.
 
@@ -131,7 +132,7 @@ class Webhook:
         file: :class:`File`, optional
             The file that will be uploaded
         tts: bool, optional
-            Wether or not the message will use text-to-speech.
+            Whether or not the message will use text-to-speech.
             defaults to False
         username: str, optional
             Override the default username of the webhook, defaults
@@ -148,6 +149,9 @@ class Webhook:
             'avatar_url': avatar_url or self.avatar_url,
             'tts': tts
         }
+
+        if embeds is None:
+            embeds = []
 
         # supports a list/tuple of embeds or a single embed
         if not hasattr(embeds, '__iter__'):
@@ -200,7 +204,7 @@ class Webhook:
 
     def _request(self, method='POST', payload=None, file=None, multipart=None):
         """
-        Makes a request to the api. This function may or may
+        Makes a request to the API. This function may or may
         not be a coroutine based on the `is_async` attribute.
         """
 

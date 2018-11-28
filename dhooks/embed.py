@@ -2,7 +2,7 @@ import datetime
 
 
 class Embed:
-    """Class that represents a discord embed
+    """Class that represents a discord embed.
 
     The following parameters can be passed in during creation.
 

@@ -8,6 +8,7 @@ except ImportError:
     import json
 
 
+# TODO: can't this be replaced with copy.deepcopy?
 def copy_func(f):
     g = types.FunctionType(f.__code__, f.__globals__, name=f.__name__,
                            argdefs=f.__defaults__,
@@ -45,7 +46,7 @@ def mime_type(data):
     elif data.startswith(b'\x47\x49\x46\x38\x37\x61') or data.startswith(b'\x47\x49\x46\x38\x39\x61'):  # noqa: E501
         return 'image/gif'
     else:
-        raise ValueError('Unsupported image type given')
+        raise ValueError('Unsupported image type given.')
 
 
 def bytes_to_base64_data(data):
