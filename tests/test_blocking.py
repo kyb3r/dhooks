@@ -1,11 +1,14 @@
-from dotenv import load_dotenv, find_dotenv
 import unittest
 import requests
 import os
 
 import dhooks
 
-load_dotenv(find_dotenv())
+try:
+    from dotenv import load_dotenv, find_dotenv
+    load_dotenv(find_dotenv())
+except ImportError:
+    pass
 
 
 REAL_URL = os.getenv('TEST_WEBHOOK_URL')
