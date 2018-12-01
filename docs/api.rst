@@ -3,7 +3,7 @@
 API Reference
 =============
 
-The following section outlines the API of :dhooks:
+The following section outlines the API of dhooks.
 
 
 Webhook

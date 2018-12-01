@@ -12,9 +12,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(1, os.path.abspath('.'))
 
 
 # -- Project information -----------------------------------------------------
@@ -24,9 +25,9 @@ copyright = '2018, kyb3r, fourjr'
 author = 'kyb3r, fourjr'
 
 # The short X.Y version
-version = ''
+version = '1.0.9'
 # The full version, including alpha/beta/rc tags
-release = '1.0.1'
+release = '1.0.9'
 
 
 # -- General configuration ---------------------------------------------------
@@ -155,7 +156,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'dhooks', 'dhooks Documentation',
-     author, 'dhooks', 'One line description of project.',
+     author, 'dhooks', 'Interact with discord webhooks using python.',
      'Miscellaneous'),
 ]
 
@@ -183,4 +184,9 @@ epub_exclude_files = ['search.html']
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
+                       'requests':
+                           ('http://docs.python-requests.org/en/master/',
+                            None),
+                       'aiohttp':
+                           ('https://aiohttp.readthedocs.io/en/stable/', None)}

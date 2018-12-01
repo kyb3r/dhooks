@@ -1,14 +1,16 @@
 class File:
-    """Data class that represents a file that can be sent to discord.
+    """
+    Data class that represents a file that can be sent to discord.
 
     Parameters
     ----------
-    fp : str or BinaryIO
+    fp : str or :class:`io.BytesIO`
         A file path or a binary stream that is the file. If a file path
         is provided, this class will open and close the file for you.
+
     name : str, optional
         The name of the file that discord will use, if not provided,
-        defaults to the file path or the binary stream's name
+        defaults to the file name or the binary stream's name.
     """
 
     content_type = 'application/octet-stream'
