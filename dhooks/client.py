@@ -141,6 +141,15 @@ class Webhook:
 
         if session is not None:
             self.session = session
+            if is_async and not isinstance(self.session,
+                                           aiohttp.ClientSession):
+                raise TypeError("is_async is set to True, but session "
+                                "isn't aiohttp.ClientSession.")
+            elif not is_async and not isinstance(self.session,
+                                                 requests.Session):
+                raise TypeError("is_async is set to False, but session "
+                                "isn't requests.Session.")
+
         else:
             if self.is_async:
                 self.session = aiohttp.ClientSession()
@@ -155,7 +164,7 @@ class Webhook:
 
     @classmethod
     def Async(cls, url: str = '', session:
-              Union[aiohttp.ClientSession, requests.Session, None] = None,
+              Optional[aiohttp.ClientSession] = None,
               **options) -> 'Webhook':
         """
         Returns a new instance of Webhook with :attr:`is_async` set
@@ -389,12 +398,12 @@ class Webhook:
     def _update_fields(self, data: dict) -> None:
         if 'content' in data:
             return  # a message object was returned
-        self.id = data.get('id')
-        self.token = data.get('token')
-        self.default_avatar = data.get('avatar')
-        self.default_name = data.get('name')
-        self.guild_id = data.get('guild_id')
-        self.channel_id = data.get('channel_id')
+        self.id = data.get('id', self.id)
+        self.token = data.get('token', self.token)
+        self.default_avatar = data.get('avatar', self.default_avatar)
+        self.default_name = data.get('name', self.default_name)
+        self.guild_id = data.get('guild_id', self.guild_id)
+        self.channel_id = data.get('channel_id', self.channel_id)
 
     def _parse_or_format_url(self) -> None:
         if not self.url:
