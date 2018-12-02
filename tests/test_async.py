@@ -60,6 +60,15 @@ class TestBlockingClient(unittest.TestCase):
                     await wh.send("TEST")
         self.func = main
 
+    def test_get_info(self):
+        async def main():
+            try:
+                async with dhooks.Webhook.Async(REAL_URL) as wh:
+                    await wh.get_info()
+            except aiohttp.client_exceptions.ClientResponseError:
+                self.fail("Failed to get info.")
+        self.func = main
+
     def test_send_content(self):
         async def main():
             try:

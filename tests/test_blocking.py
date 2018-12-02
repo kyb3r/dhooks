@@ -51,6 +51,13 @@ class TestBlockingClient(unittest.TestCase):
             with dhooks.Webhook(FAKE_URL) as wh:
                 wh.send("TEST")
 
+    def test_get_info(self):
+        try:
+            with dhooks.Webhook(REAL_URL) as wh:
+                wh.get_info()
+        except requests.exceptions.HTTPError:
+            self.fail("Failed to get info.")
+
     def test_send_content(self):
         try:
             with dhooks.Webhook(REAL_URL) as wh:
