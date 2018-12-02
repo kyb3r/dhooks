@@ -416,7 +416,7 @@ class Webhook:
                     resp = await self.session.post(self.url,
                                                    data=data,
                                                    headers=headers)
-                    file.close()
+
                 else:
                     headers['Content-Type'] = 'application/json'
                     resp = await self.session.post(self.url,

@@ -13,16 +13,15 @@ class File:
         defaults to the file name or the binary stream's name.
     """
 
-    def __init__(self, fp, name=None):
+    def __init__(self, fp, name=''):
         if isinstance(fp, str):
             self.fp = open(fp, 'rb')
             self._opened = True
+            self.name = name if name else fp
         else:
             self.fp = fp
             self._opened = False
-
-        self.name = name or (fp if isinstance(fp, str) else
-                             getattr(fp, 'name', 'file'))
+            self.name = name if name else getattr(fp, 'name', 'filename')
 
     def seek(self, offset=0, *args, **kwargs):
         self.fp.seek(offset, *args, **kwargs)
