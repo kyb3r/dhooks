@@ -2,11 +2,6 @@ from base64 import b64encode
 import types
 import functools
 
-try:
-    import ujson as json
-except ImportError:
-    import json
-
 
 def copy_func(f):
     # noinspection PyArgumentList
