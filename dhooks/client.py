@@ -437,7 +437,8 @@ class Webhook:
                 raise ValueError("Bad method: {}".format(method))
 
             if resp.status == 429:  # Too many request
-                await asyncio.sleep(await resp.json()['retry_after'] / 1000.0)
+                await asyncio.sleep((await resp.json())
+                                    ['retry_after'] / 1000.0)
             else:
                 rate_limited = False
 
