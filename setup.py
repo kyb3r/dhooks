@@ -7,6 +7,8 @@ def read(fname):
         return f.read()
 
 
+requirements = read("requirements.txt").strip().split()
+
 setup(
     name='dhooks',
     author='kyb3r',
@@ -17,6 +19,7 @@ setup(
     long_description_content_type='text/markdown',
     license='MIT',
     keywords=['discord', 'webhooks', 'discordwebhooks', 'discordhooks'],
+    install_requires=requirements,
     python_requires='>=3.5',
     url='https://github.com/4rqm/dhooks/',
     project_urls={
