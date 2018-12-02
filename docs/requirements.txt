@@ -1,3 +1,2 @@
-aiohttp==2.3.10
-requests
-dhooks
+sphinx_rtd_theme
+sphinx
