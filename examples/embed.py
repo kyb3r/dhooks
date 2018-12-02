@@ -12,8 +12,8 @@ client = Webhook(webhook_url)
 em1 = Embed()
 
 em1.color = 0x00FF00  # colors should be a hexadecimal value
-em1.description = """this description supports 
-[named links](https://discordapp.com) as well. 
+em1.description = """This description supports
+[named links](https://discordapp.com) as well.
 
 ``` \n
 yes, even code blocks```
