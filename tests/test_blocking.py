@@ -5,14 +5,14 @@ import os
 import dhooks
 from io import BytesIO
 
-try:
-    from dotenv import load_dotenv, find_dotenv
-    load_dotenv(find_dotenv())
-except ImportError:
-    load_dotenv = find_dotenv = None
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
 
-REAL_URL = os.getenv('TEST_WEBHOOK_URL')
+REAL_URL = os.getenv('TEST_WEBHOOK_URL', None)
+if REAL_URL is None:
+    raise ValueError("TEST_WEBHOOK_URL environment variable not found.")
+
 FAKE_URL = 'https://discordapp.com/api/webhooks/12345678901234567890/' \
            'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk'
 
