@@ -1,2 +1,3 @@
 sphinx_rtd_theme
 sphinx
+aiohttp==2.3.10
