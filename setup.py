@@ -11,7 +11,7 @@ setup(
     name='dhooks',
     author='kyb3r',
     packages=find_packages(),
-    version='1.0.9',
+    version='1.1.0',
     description='An (a)sync wrapper for discord webhooks',
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
