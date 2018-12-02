@@ -27,6 +27,9 @@ setup(
             'tox-travis',
             'flake8',
             'python-dotenv'
+        },
+        'examples': {
+            'sanic'
         }
     },
     python_requires='>=3.5',

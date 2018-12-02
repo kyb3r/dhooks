@@ -45,11 +45,13 @@ To install the library simply use pip.
 pip install dhooks
 ```
 
-If you would also like to build the docs or run tests, you may want to install
+If you would also like to get the latest version of dhooks from GitHub, build docs, run tests or run examples, you may want to install
 dhooks with the optional extended dependencies.
 
 ```commandline
-pip install dhooks[tests,docs]
+git clone https://github.com/kyb3r/dhooks.git
+cd dhooks
+pip install .[tests,docs,examples]
 ```
 
 ## Quick Start
