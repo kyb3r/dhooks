@@ -3,6 +3,8 @@ import re
 import aiohttp
 import requests
 from typing import Union, List, Optional, Coroutine
+import time
+import asyncio
 
 from .utils import bytes_to_base64_data
 from .utils import aliased, alias
@@ -338,40 +340,49 @@ class Webhook:
         if headers is None:
             headers = {}
 
-        if method == "POST":
-            if file is not None:
-                payload = {'payload_json': json.dumps(payload)}
-                multipart = {'file': (file.name, file.open())}
-                resp = self.session.post(self.url, data=payload,
-                                         headers=headers, files=multipart)
-                file.close()
+        rate_limited = True
+        resp = None
+
+        while rate_limited:
+            if method == "POST":
+                if file is not None:
+                    payload = {'payload_json': json.dumps(payload)}
+                    multipart = {'file': (file.name, file.open())}
+                    resp = self.session.post(self.url, data=payload,
+                                             headers=headers, files=multipart)
+                    file.close()
+                else:
+                    headers['Content-Type'] = 'application/json'
+                    resp = self.session.post(self.url, json=payload,
+                                             headers=headers)
+
+            elif method == "DELETE":
+                resp = self.session.delete(self.url, headers=headers)
+
+            elif method == "PATCH":
+                resp = self.session.patch(self.url, json=payload,
+                                          headers=headers)
+
+            elif method == "GET":
+                resp = self.session.get(self.url, headers=headers)
+
             else:
-                headers['Content-Type'] = 'application/json'
-                resp = self.session.post(self.url, json=payload,
-                                         headers=headers)
+                raise ValueError("Bad method: {}".format(method))
 
-        elif method == "DELETE":
-            resp = self.session.delete(self.url, headers=headers)
-
-        elif method == "PATCH":
-            resp = self.session.patch(self.url, json=payload,
-                                      headers=headers)
-
-        elif method == "GET":
-            resp = self.session.get(self.url, headers=headers)
-
-        else:
-            raise ValueError("Bad method: {}".format(method))
-
-        resp.raise_for_status()
+            if resp.status_code == 429:  # Too many request
+                time.sleep(resp.json()['retry_after']/1000.0)
+                continue
+            else:
+                rate_limited = False
 
         if resp.status_code == 204:  # method DELETE
             return
 
+        resp.raise_for_status()
+
         self._update_fields(resp.json())
         return self
 
-    # TODO: fix function
     async def _async_request(self, method: str = 'POST',
                              payload: dict = None,
                              file: Optional[File] = None,
@@ -389,45 +400,51 @@ class Webhook:
         if headers is None:
             headers = {}
 
-        if method == "POST":
-            if file is not None:
-                data = aiohttp.FormData()
-                data.add_field('file', file.open(), filename=file.name)
-                data.add_field('payload_json', json.dumps(payload))
+        rate_limited = True
+        resp = None
 
-                resp = await self.session.post(self.url,
-                                               data=data,
-                                               headers=headers,
-                                               raise_for_status=True)
-                file.close()
+        while rate_limited:
+            if method == "POST":
+                if file is not None:
+                    data = aiohttp.FormData()
+                    data.add_field('file', file.open(), filename=file.name)
+                    data.add_field('payload_json', json.dumps(payload))
+
+                    resp = await self.session.post(self.url,
+                                                   data=data,
+                                                   headers=headers)
+                    file.close()
+                else:
+                    headers['Content-Type'] = 'application/json'
+                    resp = await self.session.post(self.url,
+                                                   json=payload,
+                                                   headers=headers)
+
+            elif method == "DELETE":
+                resp = await self.session.delete(self.url,
+                                                 headers=headers)
+
+            elif method == "PATCH":
+                resp = await self.session.patch(self.url,
+                                                json=payload,
+                                                headers=headers)
+
+            elif method == "GET":
+                resp = await self.session.get(self.url,
+                                              headers=headers)
+
             else:
-                headers['Content-Type'] = 'application/json'
-                resp = await self.session.post(self.url,
-                                               json=payload,
-                                               headers=headers,
-                                               raise_for_status=True)
+                raise ValueError("Bad method: {}".format(method))
 
-        elif method == "DELETE":
-            resp = await self.session.delete(self.url,
-                                             headers=headers,
-                                             raise_for_status=True)
-
-        elif method == "PATCH":
-            resp = await self.session.patch(self.url,
-                                            json=payload,
-                                            headers=headers,
-                                            raise_for_status=True)
-
-        elif method == "GET":
-            resp = await self.session.get(self.url,
-                                          headers=headers,
-                                          raise_for_status=True)
-
-        else:
-            raise ValueError("Bad method: {}".format(method))
+            if resp.status == 429:  # Too many request
+                await asyncio.sleep(resp.json()['retry_after'] / 1000.0)
+            else:
+                rate_limited = False
 
         if resp.status == 204:  # method DELETE
             return
+
+        resp.raise_for_status()
 
         self._update_fields(await resp.json())
         return self

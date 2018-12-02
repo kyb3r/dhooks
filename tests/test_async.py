@@ -46,7 +46,6 @@ class TestBlockingClient(unittest.TestCase):
 
         response = requests.get('https://i.imgur.com/rdm3W9t.png')
         self.file = dhooks.File(BytesIO(response.content), name='wow.png')
-        time.sleep(1.5)  # prevent Discord rate limit
 
         self.func = None
 
