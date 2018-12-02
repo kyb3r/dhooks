@@ -16,7 +16,7 @@ def copy_func(f):
 def alias(*aliases):
     def decorator(func):
         new_func = copy_func(func)
-        new_func.__doc__ = 'Alias for :meth:`{0.__name__}.`'.format(func)
+        new_func.__doc__ = 'Alias for :meth:`{0.__name__}`.'.format(func)
         func._aliases = {a: new_func for a in aliases}
         return func
     return decorator
