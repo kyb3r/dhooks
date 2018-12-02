@@ -1,7 +1,8 @@
-import os
 from dhooks import Embed, Webhook
 
-webhook_url = os.getenv('webhook_url')
+###
+webhook_url = "<INSERT WEBHOOK URL HERE>"
+###
 
 client = Webhook(webhook_url)
 
@@ -11,8 +12,13 @@ client = Webhook(webhook_url)
 em1 = Embed()
 
 em1.color = 0x00FF00  # colors should be a hexadecimal value
-em1.description = "this description supports \
-[named links](https://discordapp.com) as well. ```\nyes, even code blocks```"
+em1.description = """this description supports 
+[named links](https://discordapp.com) as well. 
+
+``` \n
+yes, even code blocks```
+"""
+
 em1.timestamp = "2018-04-30T05:34:26-07:00"
 
 em1.set_author(
