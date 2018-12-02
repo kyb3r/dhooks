@@ -23,3 +23,6 @@ after_failure:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
   - chmod u+x send.sh
   - ./send.sh failure $WEBHOOK_URL
+
+env:
+  - TEST_WEBHOOK_URL=https://discordapp.com/api/webhooks/513328897509556225/97NMuUyF1QJfuJF3ueSMtIxzIo1kYkvfZbgsXTbQzF403cFrMmb3Nc5NBaxFqrhoeq6W
