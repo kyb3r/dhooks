@@ -370,7 +370,7 @@ class Webhook:
                 raise ValueError("Bad method: {}".format(method))
 
             if resp.status_code == 429:  # Too many request
-                time.sleep(resp.json()['retry_after']/1000.0)
+                time.sleep(resp.json()['retry_after'] / 1000.0)
                 continue
             else:
                 rate_limited = False
