@@ -329,7 +329,8 @@ class Webhook:
         if self.is_async:
             return self._async_request(method, payload, file, headers)
 
-        self.session: requests.Session
+        # type annotation support for Python 3.5
+        self.session: requests.Session = self.session
 
         if payload is None:
             payload = {}
@@ -379,7 +380,8 @@ class Webhook:
         """
         Async version of the request function using aiohttp.
         """
-        self.session: aiohttp.ClientSession
+        # type annotation support for Python 3.5
+        self.session: aiohttp.ClientSession = self.session
 
         if payload is None:
             payload = {}
