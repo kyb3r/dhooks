@@ -16,16 +16,19 @@ class File:
     def __init__(self, fp, name=''):
         if isinstance(fp, str):
             self.fp = open(fp, 'rb')
-            self._opened = True
+            self._manual_opened = True
             self.name = name if name else fp
         else:
             self.fp = fp
-            self._opened = False
+            self._manual_opened = False
             self.name = name if name else getattr(fp, 'name', 'filename')
+        self._close = self.fp.close
+        self.fp.close = lambda: None  # prevent aiohttp from closing the file
 
     def seek(self, offset=0, *args, **kwargs):
         self.fp.seek(offset, *args, **kwargs)
 
     def close(self):
-        if self._opened:
+        self.fp.close = self._close
+        if self._manual_opened:
             self.fp.close()
