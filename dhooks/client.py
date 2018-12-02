@@ -308,12 +308,12 @@ class Webhook:
 
         The following attributes are refreshed with data:
 
-        * :attr:`default_avatar`
-        * :attr:`default_name`
-        * :attr:`guild_id`
-        * :attr:`channel_id`
+        \* :attr:`default_avatar`
+        \* :attr:`default_name`
+        \* :attr:`guild_id`
+        \* :attr:`channel_id`
 
-        """
+        """  # noqa: W605
         return self._request(method='GET')
 
     def delete(self) -> None:
