@@ -14,15 +14,19 @@ class File:
     """
 
     def __init__(self, fp, name=None):
-        self.fp = fp
+        if isinstance(fp, str):
+            self.fp = open(fp, 'rb')
+            self._opened = True
+        else:
+            self.fp = fp
+            self._opened = False
+
         self.name = name or (fp if isinstance(fp, str) else
                              getattr(fp, 'name', 'file'))
 
-    def open(self):
-        if isinstance(self.fp, str):  # its a file path
-            self.fp = open(self.fp, 'rb')
-        return self.fp
+    def seek(self, offset=0, *args, **kwargs):
+        self.fp.seek(offset, *args, **kwargs)
 
     def close(self):
-        if not isinstance(self.fp, str):
+        if self._opened:
             self.fp.close()

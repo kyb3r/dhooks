@@ -347,10 +347,9 @@ class Webhook:
             if method == "POST":
                 if file is not None:
                     payload = {'payload_json': json.dumps(payload)}
-                    multipart = {'file': (file.name, file.open())}
+                    multipart = {'file': (file.name, file.fp)}
                     resp = self.session.post(self.url, data=payload,
                                              headers=headers, files=multipart)
-                    file.close()
                 else:
                     headers['Content-Type'] = 'application/json'
                     resp = self.session.post(self.url, json=payload,
@@ -371,8 +370,12 @@ class Webhook:
 
             if resp.status_code == 429:  # Too many request
                 time.sleep(resp.json()['retry_after'] / 1000.0)
+                if file is not None:
+                    file.seek()
                 continue
             else:
+                if file is not None:
+                    file.close()
                 rate_limited = False
 
         if resp.status_code == 204:  # method DELETE
@@ -407,7 +410,7 @@ class Webhook:
             if method == "POST":
                 if file is not None:
                     data = aiohttp.FormData()
-                    data.add_field('file', file.open(), filename=file.name)
+                    data.add_field('file', file.fp, filename=file.name)
                     data.add_field('payload_json', json.dumps(payload))
 
                     resp = await self.session.post(self.url,
@@ -439,7 +442,12 @@ class Webhook:
             if resp.status == 429:  # Too many request
                 await asyncio.sleep((await resp.json())
                                     ['retry_after'] / 1000.0)
+                if file is not None:
+                    file.seek()
+                continue
             else:
+                if file is not None:
+                    file.close()
                 rate_limited = False
 
         if resp.status == 204:  # method DELETE
