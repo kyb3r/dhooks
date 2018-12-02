@@ -1,4 +1,2 @@
 tox-travis
-python-dotenv
 flake8
-pytest
