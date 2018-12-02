@@ -17,7 +17,7 @@ setup(
     long_description_content_type='text/markdown',
     license='MIT',
     keywords=['discord', 'webhooks', 'discordwebhooks', 'discordhooks'],
-    install_requires=['aiohttp==3.5.0a1', 'requests==2.20.1'],
+    install_requires=['aiohttp', 'requests==2.20.1'],
     python_requires='>=3.5',
     url='https://github.com/4rqm/dhooks/',
     project_urls={
