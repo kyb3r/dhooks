@@ -56,9 +56,3 @@ def bytes_to_base64_data(data):
     mime = mime_type(data)
     b64 = b64encode(data).decode('ascii')
     return fmt.format(mime=mime, data=b64)
-
-
-def try_json(text):
-    if not text:
-        return None  # request successful but no response.
-    return json.loads(text)

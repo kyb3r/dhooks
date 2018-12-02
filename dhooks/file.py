@@ -13,8 +13,6 @@ class File:
         defaults to the file name or the binary stream's name.
     """
 
-    content_type = 'application/octet-stream'
-
     def __init__(self, fp, name=None):
         self.fp = fp
         self.name = name or (fp if isinstance(fp, str) else

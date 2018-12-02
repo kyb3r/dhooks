@@ -4,7 +4,7 @@ import aiohttp
 import requests
 from typing import Union, List, Optional, Coroutine
 
-from .utils import try_json, bytes_to_base64_data
+from .utils import bytes_to_base64_data
 from .utils import aliased, alias
 from .embed import Embed
 from .file import File
@@ -72,14 +72,14 @@ class Webhook:
     url: str
         The webhook URL that the client will send requests to.
 
-    username: str or None
+    username: str
         The username that will override the default name of the webhook every
-        time you send a message. If :attr:`username` is :class:`None`,
+        time you send a message. If :attr:`username` is not provided,
         the default name is used.
         
-    avatar_url: str or None
+    avatar_url: str
         The avatar URL that will override the default avatar of the webhook
-        every time you send a message. If :attr:`avatar_url` is :class:`None`,
+        every time you send a message. If :attr:`avatar_url` is not provided,
         the default avatar is used.
         
     is_async: bool
@@ -93,6 +93,10 @@ class Webhook:
         :class:`aiohttp.ClientSession` depending on :attr:`is_async`.
         
     default_name: str
+        .. warning::
+            In order for some attributes to be filled, :meth:`get_info()`
+            must be called prior.
+            
         The default name of the webhook, this can be changed via
         :meth:`modify` or directly through discord server settings.
 
@@ -101,15 +105,17 @@ class Webhook:
         sources/user#avatar-data>`_ of the webhook.
 
     guild_id: int
+        Defaults to -1.
         The id of the webhook's guild.
         
     channel_id: int
+        Defaults to -1.
         The id of the channel the webhook sends messages to.
-        
+
     """  # noqa: W605
 
-    REGEX = r'discordapp.com/api/webhooks/' \
-            r'(?P<id>[0-9]{17,21})/(?P<token>[A-Za-z0-9\.\-\_]{60,68})'
+    REGEX = r'^(https://)?discordapp.com/api/webhooks/' \
+            r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
     # TODO: if the token exceeds 68, the url's still deemed valid
     ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
     CDN = r'https://cdn.discordapp.com/avatars/' \
@@ -160,7 +166,6 @@ class Webhook:
         self.default_avatar = ''
         self.guild_id = -1
         self.channel_id = -1
-        self.get_info()
 
     @classmethod
     def Async(cls, url: str = '', session:
@@ -202,8 +207,9 @@ class Webhook:
     def send(self, content: str = '',
              embed: Optional[Embed] = None,
              embeds: Optional[List[Embed]] = None,
+             file: Optional[File] = None,
              username: str = '',
-             avatar_url: str = '', file: Optional[File] = None,
+             avatar_url: str = '',
              tts: bool = False) -> 'Webhook':
         """
         Sends a message to discord through the webhook.
@@ -213,10 +219,10 @@ class Webhook:
         content: str, optional
             The message contents (up to 2000 characters)
 
-        embed: :class:`Embed`
+        embed: :class:`Embed`, optional
             Single embedded rich content.
 
-        embeds: List[:class:`Embed`]
+        embeds: List[:class:`Embed`], optional
             List of embedded rich content.
 
         file: :class:`File`, optional
@@ -259,6 +265,9 @@ class Webhook:
             if embed is not None:
                 raise ValueError("embed and embeds cannot both be set.")
 
+        if not content and not embeds and not file:
+            raise ValueError("One of content, embed/embeds, "
+                             "or file must be set")
         payload['embeds'] = [em.to_dict() for em in embeds]
 
         return self._request('POST', payload, file=file)
@@ -320,6 +329,8 @@ class Webhook:
         if self.is_async:
             return self._async_request(method, payload, file, headers)
 
+        self.session: requests.Session
+
         if payload is None:
             payload = {}
 
@@ -329,24 +340,24 @@ class Webhook:
         if method == "POST":
             if file is not None:
                 payload = {'payload_json': json.dumps(payload)}
-                multipart = {file.name: file.open()}
-                resp = self.session.request(method, self.url, data=payload,
-                                            headers=headers, files=multipart)
+                multipart = {'file': (file.name, file.open())}
+                resp = self.session.post(self.url, data=payload,
+                                         headers=headers, files=multipart)
                 file.close()
             else:
                 headers['Content-Type'] = 'application/json'
-                resp = self.session.request(method, self.url, json=payload,
-                                            headers=headers)
+                resp = self.session.post(self.url, json=payload,
+                                         headers=headers)
 
         elif method == "DELETE":
-            resp = self.session.request(method, self.url, headers=headers)
+            resp = self.session.delete(self.url, headers=headers)
 
         elif method == "PATCH":
-            resp = self.session.request(method, self.url, json=payload,
-                                        headers=headers)
+            resp = self.session.patch(self.url, json=payload,
+                                      headers=headers)
 
         elif method == "GET":
-            resp = self.session.request(method, self.url, headers=headers)
+            resp = self.session.get(self.url, headers=headers)
 
         else:
             raise ValueError("Bad method: {}".format(method))
@@ -368,6 +379,7 @@ class Webhook:
         """
         Async version of the request function using aiohttp.
         """
+        self.session: aiohttp.ClientSession
 
         if payload is None:
             payload = {}
@@ -375,25 +387,48 @@ class Webhook:
         if headers is None:
             headers = {}
 
-        if file:
-            data = aiohttp.FormData()
-            data.add_field('file', file.open(), filename=file.name,
-                           content_type=file.content_type)
-            data.add_field('payload_json', payload)
-        else:
-            data = payload
+        if method == "POST":
+            if file is not None:
+                data = aiohttp.FormData()
+                data.add_field('file', file.open(), filename=file.name)
+                data.add_field('payload_json', json.dumps(payload))
 
-        async with self.session.request(method, self.url, data=data,
-                                        headers=headers) as resp:
-            resp.raise_for_status()
-            text = await resp.text()
-            data = try_json(text)
-            if file:
+                resp = await self.session.post(self.url,
+                                               data=data,
+                                               headers=headers,
+                                               raise_for_status=True)
                 file.close()
-            if isinstance(data, dict):
-                self._update_fields(data)
-                return self
-            return data
+            else:
+                headers['Content-Type'] = 'application/json'
+                resp = await self.session.post(self.url,
+                                               json=payload,
+                                               headers=headers,
+                                               raise_for_status=True)
+
+        elif method == "DELETE":
+            resp = await self.session.delete(self.url,
+                                             headers=headers,
+                                             raise_for_status=True)
+
+        elif method == "PATCH":
+            resp = await self.session.patch(self.url,
+                                            json=payload,
+                                            headers=headers,
+                                            raise_for_status=True)
+
+        elif method == "GET":
+            resp = await self.session.get(self.url,
+                                          headers=headers,
+                                          raise_for_status=True)
+
+        else:
+            raise ValueError("Bad method: {}".format(method))
+
+        if resp.status == 204:  # method DELETE
+            return
+
+        self._update_fields(await resp.json())
+        return self
 
     def _update_fields(self, data: dict) -> None:
         if 'content' in data:
@@ -409,9 +444,9 @@ class Webhook:
         if not self.url:
             self.url = self.ENDPOINT.format(id=self.id, token=self.token)
         else:
-            match = re.search(self.REGEX, self.url)
+            match = re.match(self.REGEX, self.url)
             if match is None:
                 raise ValueError('Invalid webhook URL provided.')
-            id_, token = match.groups()
-            self.id = int(id_)
-            self.token = token
+
+            self.id = int(match.group("id"))
+            self.token = match.group("token")
