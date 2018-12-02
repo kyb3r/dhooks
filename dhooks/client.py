@@ -116,7 +116,7 @@ class Webhook:
 
     """  # noqa: W605
 
-    URL_REGEX = r'^(?:https?://)?discordapp.com/api/webhooks/' \
+    URL_REGEX = r'^(?:https?://)?(canary\.)?discordapp\.com/api/webhooks/' \
                 r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
     ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
     CDN = r'https://cdn.discordapp.com/avatars/' \
