@@ -1,3 +1,6 @@
+from typing import BinaryIO, Union
+
+
 class File:
     """
     Data class that represents a file that can be sent to discord.
@@ -11,9 +14,10 @@ class File:
     name : str, optional
         The name of the file that discord will use, if not provided,
         defaults to the file name or the binary stream's name.
+
     """
 
-    def __init__(self, fp, name=''):
+    def __init__(self, fp: Union[BinaryIO, str], name: str = ''):
         if isinstance(fp, str):
             self.fp = open(fp, 'rb')
             self._manual_opened = True
@@ -25,10 +29,20 @@ class File:
         self._close = self.fp.close
         self.fp.close = lambda: None  # prevent aiohttp from closing the file
 
-    def seek(self, offset=0, *args, **kwargs):
-        self.fp.seek(offset, *args, **kwargs)
+    def seek(self, offset: int = 0, *args, **kwargs):
+        """
+        A shortcut to ``self.fp.seek``.
 
-    def close(self):
+        """
+
+        return self.fp.seek(offset, *args, **kwargs)
+
+    def close(self) -> None:
+        """
+        Closes the file if the file was opened by :class:`File`,
+        if not, this does nothing.
+
+        """
         self.fp.close = self._close
         if self._manual_opened:
             self.fp.close()

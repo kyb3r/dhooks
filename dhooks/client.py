@@ -180,6 +180,7 @@ class Webhook:
         Equivalent to: ::
 
             Webhook(url, session=session, is_async=True, **options)
+            
         """
 
         return cls(url, session=session, is_async=True, **options)
@@ -241,6 +242,7 @@ class Webhook:
         avatar_url: str, optional
             Defaults to :attr:`avatar_url`.
             Override the default avatar of the webhook.
+
         """
 
         payload = {
@@ -286,6 +288,7 @@ class Webhook:
 
         avatar: bytes, optional
             The new default avatar that webhook will be set to.
+
         """
         payload = {}
 
@@ -310,12 +313,14 @@ class Webhook:
         * :attr:`default_name`
         * :attr:`guild_id`
         * :attr:`channel_id`
+
         """
         return self._request(method='GET')
 
     def delete(self) -> None:
         """
         Deletes the :class:`Webhook` permanently.
+
         """
         self._request(method='DELETE')
 
@@ -327,6 +332,7 @@ class Webhook:
         """
         Makes a request to the API. This function may or may
         not be a coroutine based on the :attr:`is_async` attribute.
+
         """
         if self.is_async:
             return self._async_request(method, payload, file, headers)
@@ -393,6 +399,7 @@ class Webhook:
             Optional['Webhook']:
         """
         Async version of the request function using aiohttp.
+
         """
         # type annotation support for Python 3.5
         self.session = self.session  # type: aiohttp.ClientSession

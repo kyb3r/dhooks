@@ -26,10 +26,12 @@ def aliased(cls):
     original_methods = cls.__dict__.copy()
     for method in original_methods.values():
         if hasattr(method, '_aliases'):
-            for alias, func in method._aliases.items():
-                if alias in original_methods.keys():
-                    continue
-                setattr(cls, alias, func)
+            for name, func in method._aliases.items():
+                if name in original_methods.keys():
+                    raise ValueError("{} already existed in {}, "
+                                     "cannot create alias."
+                                     .format(name, cls.__name__))
+                setattr(cls, name, func)
     return cls
 
 
