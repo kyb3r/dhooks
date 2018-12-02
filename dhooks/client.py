@@ -116,9 +116,8 @@ class Webhook:
 
     """  # noqa: W605
 
-    REGEX = r'^(https://)?discordapp.com/api/webhooks/' \
-            r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
-    # TODO: if the token exceeds 68, the url's still deemed valid
+    URL_REGEX = r'^(https://)?discordapp.com/api/webhooks/' \
+                r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
     ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
     CDN = r'https://cdn.discordapp.com/avatars/' \
           r'{0.id}/{0.default_avatar}.{1}?size={2}'
@@ -479,7 +478,7 @@ class Webhook:
         if not self.url:
             self.url = self.ENDPOINT.format(id=self.id, token=self.token)
         else:
-            match = re.match(self.REGEX, self.url)
+            match = re.match(self.URL_REGEX, self.url)
             if match is None:
                 raise ValueError('Invalid webhook URL provided.')
 
