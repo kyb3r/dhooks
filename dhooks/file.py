@@ -37,12 +37,17 @@ class File:
 
         return self.fp.seek(offset, *args, **kwargs)
 
-    def close(self) -> None:
+    def close(self, force=False) -> None:
         """
         Closes the file if the file was opened by :class:`File`,
         if not, this does nothing.
 
+        Parameters
+        ----------
+        force: bool
+            If set to :class:`True`, force close every file.
+
         """
         self.fp.close = self._close
-        if self._manual_opened:
+        if self._manual_opened or force:
             self.fp.close()
