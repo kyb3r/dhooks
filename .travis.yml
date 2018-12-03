@@ -9,8 +9,7 @@ matrix:
     dist: xenial
 
 install:
-  - pip install -r tests/requirements.txt
-  - pip install .
+  pip install -e .[tests,docs]
 
 before_script: flake8
 script: tox

@@ -6,15 +6,19 @@
   <br>
 
   <a href="https://travis-ci.com/kyb3r/dhooks">
-    <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge&colorB=7289DA" alt="Travis" />
+    <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge&colorB=06D6A0" alt="Travis" />
+  </a>
+  
+  <a href='https://test-dhooks-doc.readthedocs.io/en/latest/?badge=latest'>
+    <img src='https://img.shields.io/readthedocs/dhooks.svg?style=for-the-badge&colorB=E8BE5D' alt='Documentation Status' />
+  </a>
+
+  <a href="https://github.com/kyb3r/dhooks/">
+    <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=for-the-badge&colorB=F489A3" alt="Py Versions" />
   </a>
 
   <a href="https://pypi.org/project/dhooks/">
-    <img src="https://img.shields.io/pypi/pyversions/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="Versions" />
-  </a>
-
-  <a href="https://pypi.org/project/dhooks/">
-    <img src="https://img.shields.io/pypi/v/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="PyPi" />
+    <img src="https://img.shields.io/pypi/v/dhooks.svg?style=for-the-badge&colorB=61829F" alt="PyPi" />
   </a>
 
   <a href="https://pypi.org/project/dhooks/">
@@ -34,17 +38,27 @@
 
 ## Installation
 
-To install the library simply use [pipenv](http://pipenv.org/) (or pip, of course).
+To install the library simply use pip.
 
+
+```commandline
+pip install dhooks
 ```
-pipenv install dhooks
+
+If you would also like to get the latest version of dhooks from GitHub, build docs, run tests or run examples, you may want to install
+dhooks with the optional extended dependencies.
+
+```commandline
+git clone https://github.com/kyb3r/dhooks.git
+cd dhooks
+pip install .[tests,docs,examples]
 ```
 
 ## Quick Start
 
 ### Sending Messages:
 
-```py
+```python
 from dhooks import Webhook
 
 hook = Webhook('url')
@@ -62,7 +76,7 @@ You can easily format and send embeds using this library.
 
 Note: `Embed` objects from `discord.py` are also compatible with this library.
 
-```py
+```python
 from dhooks import Webhook, Embed
 
 hook = Webhook('url')
@@ -91,7 +105,7 @@ hook.send(embeds=embed)
 
 You can easily send files as shown.
 
-```py
+```python
 from dhooks import Webhook, File
 from io import BytesIO
 import requests
@@ -105,7 +119,7 @@ hook.send('Look at this:', file=file)
 
 You can also pass a file-like object:
 
-```py
+```python
 response = requests.get('https://i.imgur.com/rdm3W9t.png')
 file = File(BytesIO(response.content), name='wow.png')
 
@@ -116,7 +130,7 @@ hook.send('Another one:', file=file)
 
 You can get some basic information related to the webhook through Discord's API.
 
-```py
+```python
 hook.get_info()
 ```
 
@@ -131,7 +145,7 @@ The following attributes will be populated with data from discord:
 ### Modify and Delete Webhooks:
 You can change the default name and avatar of a webhook easily.
 
-```py
+```python
 with open('img.png', rb) as f:
     img = f.read()  # bytes
 
@@ -144,7 +158,7 @@ hook.delete()  # webhook deleted permanently
 
 To asynchronously make requests using `aiohttp`, simply use `Webhook.Async` to create the object. An example is as follows. Simply use the `await` keyword when calling API methods.
 
-```py
+```python
 from dhooks import Webhook
 
 async def main():
@@ -159,7 +173,7 @@ async def main():
 ```
 
 Alternatively you can use an `async with` block (asynchronous context manager) to automatically close the session once finished.
-```py
+```python
 async def main():
     async with Webhook.Async('url') as hook:
         await hook.send('hello')

@@ -17,7 +17,21 @@ setup(
     long_description_content_type='text/markdown',
     license='MIT',
     keywords=['discord', 'webhooks', 'discordwebhooks', 'discordhooks'],
-    install_requires=['aiohttp', 'requests==2.20.1'],
+    install_requires=['aiohttp', 'requests'],
+    extras_require={
+        'docs': {
+            'sphinx_rtd_theme',
+            'sphinx'
+        },
+        'tests': {
+            'tox-travis',
+            'flake8',
+            'python-dotenv'
+        },
+        'examples': {
+            'sanic'
+        }
+    },
     python_requires='>=3.5',
     url='https://github.com/4rqm/dhooks/',
     project_urls={
