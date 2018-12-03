@@ -12,6 +12,11 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import os
+import sys
+
+sys.path.insert(0, os.path.split(os.path.dirname(
+    os.path.abspath(__file__)))[0])
 
 # -- Project information -----------------------------------------------------
 
@@ -23,7 +28,6 @@ author = 'kyb3r, fourjr'
 version = '1.1.0'
 # The full version, including alpha/beta/rc tags
 release = '1.1.0'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -71,7 +75,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -99,13 +102,17 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
-
+html_theme_options = {
+    'style_external_links': True,
+    # Toc options
+    'navigation_depth': 4,
+    'titles_only': False
+}
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'dhooksdoc'
-
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -135,7 +142,6 @@ latex_documents = [
      'kyb3r, fourjr', 'manual'),
 ]
 
-
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
@@ -144,7 +150,6 @@ man_pages = [
     (master_doc, 'dhooks', 'dhooks Documentation',
      [author], 1)
 ]
-
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -156,7 +161,6 @@ texinfo_documents = [
      author, 'dhooks', 'Interact with discord webhooks using python.',
      'Miscellaneous'),
 ]
-
 
 # -- Options for Epub output -------------------------------------------------
 
@@ -175,15 +179,16 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
-                       'requests':
-                           ('http://docs.python-requests.org/en/master/',
-                            None),
-                       'aiohttp':
-                           ('https://aiohttp.readthedocs.io/en/stable/', None)}
+intersphinx_mapping = {
+    'python':
+        ('https://docs.python.org/3', None),
+    'requests':
+        ('http://docs.python-requests.org/en/master/', None),
+    'aiohttp':
+        ('https://aiohttp.readthedocs.io/en/stable/', None)
+}
