@@ -21,10 +21,6 @@
     <img src="https://img.shields.io/pypi/v/dhooks.svg?style=for-the-badge&colorB=61829F" alt="PyPi" />
   </a>
 
-  <a href="https://pypi.org/project/dhooks/">
-    <img src="https://img.shields.io/pypi/dm/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="Downloads" />
-  </a>
-
   <a href="https://github.com/kyb3r/dhooks/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/kyb3r/dhooks.svg?style=for-the-badge&colorB=7289DA" alt="LICENSE" />
   </a>
