@@ -94,7 +94,7 @@ embed.set_footer(text='Here is my footer text', icon_url=image1)
 embed.set_thumbnail(image1)
 embed.set_image(image2)
 
-hook.send(embeds=embed)
+hook.send(embed=embed)
 ```
 
 ### Sending Files:
