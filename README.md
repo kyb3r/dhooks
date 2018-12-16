@@ -80,7 +80,7 @@ hook = Webhook('url')
 embed = Embed(
     description='This is the **description** of the embed! :smiley:',
     color=0x1e0f3,
-    timestamp=True  # sets the timestamp to current time
+    timestamp='now'  # sets the timestamp to current time
     )
 
 image1 = 'https://i.imgur.com/rdm3W9t.png'
