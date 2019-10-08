@@ -9,8 +9,8 @@
     <img src="https://img.shields.io/travis/com/kyb3r/dhooks/master.svg?style=for-the-badge&colorB=06D6A0" alt="Travis" />
   </a>
   
-  <a href='https://test-dhooks-doc.readthedocs.io/en/latest/?badge=latest'>
-    <img src='https://img.shields.io/readthedocs/dhooks.svg?style=for-the-badge&colorB=E8BE5D' alt='Documentation Status' />
+  <a href="https://test-dhooks-doc.readthedocs.io/en/latest/?badge=latest">
+    <img src="https://img.shields.io/readthedocs/dhooks.svg?style=for-the-badge&colorB=E8BE5D" alt="Documentation Status" />
   </a>
 
   <a href="https://github.com/kyb3r/dhooks/">
@@ -31,11 +31,9 @@
   This <strong>simple</strong> library enables you to easily interact with discord webhooks, allowing you to easily format discord messages and discord embeds, retrieve webhook information, modify and delete webhooks. Asynchronous usage is also supported.
 </div>
 
-
 ## Installation
 
 To install the library simply use pip.
-
 
 ```commandline
 pip install dhooks
@@ -79,7 +77,7 @@ hook = Webhook('url')
 
 embed = Embed(
     description='This is the **description** of the embed! :smiley:',
-    color=0x1e0f3,
+    color=0x5CDBF0,
     timestamp='now'  # sets the timestamp to current time
     )
 
@@ -132,13 +130,13 @@ hook.get_info()
 
 The following attributes will be populated with data from discord:
 
- - `hook.guild_id`
- - `hook.channel_id`
- - `hook.default_name`
- - `hook.default_avatar_url`
-
+- `hook.guild_id`
+- `hook.channel_id`
+- `hook.default_name`
+- `hook.default_avatar_url`
 
 ### Modify and Delete Webhooks:
+
 You can change the default name and avatar of a webhook easily.
 
 ```python
@@ -169,6 +167,7 @@ async def main():
 ```
 
 Alternatively you can use an `async with` block (asynchronous context manager) to automatically close the session once finished.
+
 ```python
 async def main():
     async with Webhook.Async('url') as hook:
@@ -176,12 +175,15 @@ async def main():
 ```
 
 ## Documentation
+
 You can find the full API reference [here](https://dhooks.readthedocs.io).
 
 ## License
+
 This project is licensed under MIT.
 
 ## Contributing
+
 Feel free to contribute to this project, a helping hand is always appreciated.
 
 [Join our discord server](https://discord.gg/etJNHCQ).
