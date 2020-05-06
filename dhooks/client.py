@@ -118,7 +118,7 @@ class Webhook:
     URL_REGEX = r'^(?:https?://)?((canary|ptb)\.)?discord\.com/api/webhooks/' \
                 r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
     ENDPOINT = 'https://discord.com/api/webhooks/{id}/{token}'
-    CDN = r'https://cdn.discord.com/avatars/' \
+    CDN = r'https://cdn.discordapp.com/avatars/' \
           r'{0.id}/{0.default_avatar}.{1}?size={2}'
 
     def __init__(self, url: str = '',
