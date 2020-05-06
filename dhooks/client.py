@@ -29,7 +29,7 @@ class Webhook:
         Note: the URL should contain the :attr:`id` and :attr:`token`
         of the webhook in the form of: ::
         
-            https://discordapp.com/api/webhooks/webhooks/{id}/{token}
+            https://discord.com/api/webhooks/webhooks/{id}/{token}
             
         .. warning::
             If you don't provide :attr:`url`, you must provide both :attr:`id`
@@ -103,7 +103,7 @@ class Webhook:
         :meth:`modify` or directly through discord server settings.
 
     default_avatar: str
-        The `avatar string <https://discordapp.com/developers/docs/re
+        The `avatar string <https://discord.com/developers/docs/re
         sources/user#avatar-data>`_ of the webhook.
 
     guild_id: int
