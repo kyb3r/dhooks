@@ -24,4 +24,4 @@ after_failure:
   - ./send.sh failure $WEBHOOK_URL
 
 env:
-  - TEST_WEBHOOK_URL=https://discordapp.com/api/webhooks/513328897509556225/97NMuUyF1QJfuJF3ueSMtIxzIo1kYkvfZbgsXTbQzF403cFrMmb3Nc5NBaxFqrhoeq6W
+  - TEST_WEBHOOK_URL=https://discord.com/api/webhooks/513328897509556225/97NMuUyF1QJfuJF3ueSMtIxzIo1kYkvfZbgsXTbQzF403cFrMmb3Nc5NBaxFqrhoeq6W
