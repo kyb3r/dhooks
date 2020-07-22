@@ -13,10 +13,10 @@ REAL_URL = os.getenv('TEST_WEBHOOK_URL', None)
 if REAL_URL is None:
     raise ValueError("TEST_WEBHOOK_URL environment variable not found.")
 
-FAKE_URL = 'https://discordapp.com/api/webhooks/12345678901234567890/' \
+FAKE_URL = 'https://discord.com/api/webhooks/12345678901234567890/' \
            'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk'
 
-MALFORMED_URL = 'https://discordapp.com/api/webhooks/bob'
+MALFORMED_URL = 'https://discord.com/api/webhooks/bob'
 
 
 class TestBlockingClient(unittest.TestCase):
