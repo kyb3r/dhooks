@@ -13,7 +13,7 @@ em1 = Embed()
 
 em1.color = 0x00FF00  # colors should be a hexadecimal value
 em1.description = """This description supports
-[named links](https://discordapp.com) as well.
+[named links](https://discord.com) as well.
 
 ``` \n
 yes, even code blocks```
@@ -24,12 +24,12 @@ em1.timestamp = "2018-04-30T05:34:26-07:00"
 em1.set_author(
     name='Author Goes Here',
     icon_url='https://i.imgur.com/rdm3W9t.png',
-    url='https://discordapp.com/'
+    url='https://discord.com/'
 )
 
 em1.set_title(
     title='title ~~(did you know you can have markdown here too?)~~',
-    url='https://discordapp.com/'
+    url='https://discord.com/'
 )
 
 em1.add_field(

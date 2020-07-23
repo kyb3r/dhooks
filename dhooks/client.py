@@ -29,7 +29,7 @@ class Webhook:
         Note: the URL should contain the :attr:`id` and :attr:`token`
         of the webhook in the form of: ::
         
-            https://discordapp.com/api/webhooks/webhooks/{id}/{token}
+            https://discord.com/api/webhooks/webhooks/{id}/{token}
             
         .. warning::
             If you don't provide :attr:`url`, you must provide both :attr:`id`
@@ -103,7 +103,7 @@ class Webhook:
         :meth:`modify` or directly through discord server settings.
 
     default_avatar: str
-        The `avatar string <https://discordapp.com/developers/docs/re
+        The `avatar string <https://discord.com/developers/docs/re
         sources/user#avatar-data>`_ of the webhook.
 
     guild_id: int
@@ -115,9 +115,9 @@ class Webhook:
         The id of the channel the webhook sends messages to.
 
     """  # noqa: W605
-    URL_REGEX = r'^(?:https?://)?((canary|ptb)\.)?discordapp\.com/api/webhooks/' \
+    URL_REGEX = r'^(?:https?://)?((canary|ptb)\.)?discord\.com/api/webhooks/' \
                 r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
-    ENDPOINT = 'https://discordapp.com/api/webhooks/{id}/{token}'
+    ENDPOINT = 'https://discord.com/api/webhooks/{id}/{token}'
     CDN = r'https://cdn.discordapp.com/avatars/' \
           r'{0.id}/{0.default_avatar}.{1}?size={2}'
 
