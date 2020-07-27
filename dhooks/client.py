@@ -320,7 +320,7 @@ class Webhook:
         Deletes the :class:`Webhook` permanently.
 
         """
-        self._request(method='DELETE')
+        return self._request(method='DELETE')
 
     def _request(self, method: str = 'POST', payload: dict = None,
                  file: Optional[File] = None, headers: dict = None) -> \
