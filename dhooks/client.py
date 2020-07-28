@@ -115,8 +115,8 @@ class Webhook:
         The id of the channel the webhook sends messages to.
 
     """  # noqa: W605
-    URL_REGEX = r'^(?:https?://)?((canary|ptb)\.)?discord\.com/api/webhooks/' \
-                r'(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
+    URL_REGEX = r'^(?:https?://)?((canary|ptb)\.)?discord(?:app)?\.com/api/' \
+                r'webhooks/(?P<id>[0-9]+)/(?P<token>[A-Za-z0-9\.\-\_]+)/?$'
     ENDPOINT = 'https://discord.com/api/webhooks/{id}/{token}'
     CDN = r'https://cdn.discordapp.com/avatars/' \
           r'{0.id}/{0.default_avatar}.{1}?size={2}'
