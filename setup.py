@@ -33,9 +33,9 @@ setup(
         }
     },
     python_requires='>=3.5.3',
-    url='https://github.com/4rqm/dhooks/',
+    url='https://github.com/kyb3r/dhooks/',
     project_urls={
-        'Issue Tracker': 'https://github.com/4rqm/dhooks/issues',
+        'Issue Tracker': 'https://github.com/kyb3r/dhooks/issues',
         'Documentation': 'https://dhooks.readthedocs.io/'
     },
     classifiers=[
