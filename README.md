@@ -140,7 +140,7 @@ The following attributes will be populated with data from discord:
 You can change the default name and avatar of a webhook easily.
 
 ```python
-with open('img.png', rb) as f:
+with open('img.png', 'rb') as f:
     img = f.read()  # bytes
 
 hook.modify(name='Bob', avatar=img)
