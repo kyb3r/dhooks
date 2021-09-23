@@ -134,7 +134,7 @@ class Webhook:
         if not self.url and (self.id == -1 or not self.token):
             raise ValueError("Either url, or id and token must be provided.")
 
-        elif not self.url and (self.id or self.token):
+        elif self.url and (self.id or self.token):
             raise ValueError("url and (id or token) must not be both "
                              "provided.")
 
